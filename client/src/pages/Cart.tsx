@@ -13,23 +13,17 @@ export default function Cart({ isOpen, onClose }) {
   }
 
   return (
-    <div>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        {/* Currently getting data from a constant but will eventually either need to be passed into the component
+    <Modal isOpen={isOpen} onClose={onClose}>
+      {/* Currently getting data from a constant but will eventually either need to be passed into the component
             of fetched from an API */}
-        {itemList.map((item) => (
-          <div>
-            <CartItem
-              item={item}
-              onDeleteItem={handleDeleteItem}
-              key={item.id}
-            />
-          </div>
-        ))}
+      {itemList.map((item) => (
+        <div>
+          <CartItem item={item} onDeleteItem={handleDeleteItem} key={item.id} />
+        </div>
+      ))}
 
-        <div>test</div>
-      </Modal>
-    </div>
+      <div>test</div>
+    </Modal>
   );
 }
 
