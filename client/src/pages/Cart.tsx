@@ -17,12 +17,8 @@ export default function Cart({ isOpen, onClose }) {
       {/* Currently getting data from a constant but will eventually either need to be passed into the component
             of fetched from an API */}
       {itemList.map((item) => (
-        <div>
-          <CartItem item={item} onDeleteItem={handleDeleteItem} key={item.id} />
-        </div>
+        <CartItem item={item} onDeleteItem={handleDeleteItem} key={item.id} />
       ))}
-
-      <div>test</div>
     </Modal>
   );
 }
@@ -52,11 +48,12 @@ function RemoveBtn({ onDeleteItem }) {
 }
 
 function Quantity({ quantity }) {
+  // TODO Will eventually need to update item data based on change in count, so state will need to be lifted up
   const [count, setCount] = useState(quantity);
 
   return (
     <>
-      <button onClick={() => setCount((c) => c - 1)}> - </button>
+      <button onClick={() => count > 0 && setCount((c) => c - 1)}> - </button>
       <span> {count} </span>
       <button onClick={() => setCount((c) => c + 1)}> + </button>
     </>
