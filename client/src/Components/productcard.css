@@ -1,0 +1,19 @@
+.single-product-grid {
+    display: grid;
+    grid-template-columns: 1fr .1fr 1fr;
+    grid-template-areas: "left" "center" "right";
+}
+
+.left {
+    grid-area: "left"
+}
+
+.center {
+    grid-area: "center";
+}
+
+.right {
+    grid-area: "right";
+    text-align: left;
+    overflow-wrap: break-word;
+}
