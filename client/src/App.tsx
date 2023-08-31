@@ -1,3 +1,4 @@
+import HallOfFame from "./Page/HallOfFame";
 import FlavorThumbnail from "./components/FlavorThumbnail";
 
 const flavor = {
@@ -7,7 +8,7 @@ const flavor = {
 };
 
 function App() {
-  return <FlavorThumbnail flavor={flavor} />;
+  return <HallOfFame />;
 }
 
 export default App;
