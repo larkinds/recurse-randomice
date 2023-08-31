@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import Cart from './pages/Cart';
+import { useState } from "react";
+import Cart from "./pages/Cart";
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);

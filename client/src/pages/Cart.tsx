@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Button, Modal } from '../components';
+import { useState } from "react";
+import { Button, Modal } from "../components";
 
 const itemList = [
-  { id: 1, image: '', flavor: 'strawberry', price: 0, quantity: 1 },
-  { id: 2, image: '', flavor: 'chocolate', price: 0, quantity: 3 },
-  { id: 3, image: '', flavor: 'vanilla', price: 0, quantity: 2 },
+  { id: 1, image: "", flavor: "strawberry", price: 0, quantity: 1 },
+  { id: 2, image: "", flavor: "chocolate", price: 0, quantity: 3 },
+  { id: 3, image: "", flavor: "vanilla", price: 0, quantity: 2 },
 ];
 
 export default function Cart({ isOpen, onClose }) {
