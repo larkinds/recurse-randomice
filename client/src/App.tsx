@@ -14,7 +14,7 @@ function App() {
         <p>Temp Footer</p>
       </footer>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
