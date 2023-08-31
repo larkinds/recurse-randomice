@@ -1,13 +1,26 @@
 import { useState } from "react";
 import { Button, Modal } from "../components";
 
-const itemList = [
+type Item = { 
+  id: number
+  image: string
+  flavor: string
+  price: number
+  quantity: number
+}
+
+const itemList: Item[] = [
   { id: 1, image: "", flavor: "strawberry", price: 0, quantity: 1 },
   { id: 2, image: "", flavor: "chocolate", price: 0, quantity: 3 },
   { id: 3, image: "", flavor: "vanilla", price: 0, quantity: 2 },
 ];
 
-export default function Cart({ isOpen, onClose }) {
+type CartType = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+export default function Cart({ isOpen, onClose }: CartType) {
   function handleDeleteItem() {
     // TODO
   }
@@ -23,7 +36,12 @@ export default function Cart({ isOpen, onClose }) {
   );
 }
 
-function CartItem({ item, onDeleteItem }) {
+type CartItemType = {
+  item: Item;
+  onDeleteItem: (id: Item["id"]) => void;
+}
+
+function CartItem({ item, onDeleteItem }: CartItemType) {
   return (
     <div>
       <ItemDetails item={item} />
@@ -33,7 +51,8 @@ function CartItem({ item, onDeleteItem }) {
   );
 }
 
-function ItemDetails({ item }) {
+
+function ItemDetails({ item }: {item: Item}) {
   return (
     <div>
       <img src={item.image} alt={item.flavor} />
@@ -43,11 +62,11 @@ function ItemDetails({ item }) {
   );
 }
 
-function RemoveBtn({ onDeleteItem }) {
+function RemoveBtn({ onDeleteItem }: {onDeleteItem: CartItemType["onDeleteItem"]}) {
   return <Button action={onDeleteItem}>Remove</Button>;
 }
 
-function Quantity({ quantity }) {
+function Quantity({ quantity }: {quantity: Item["quantity"]}) {
   // TODO Will eventually need to update item data based on change in count, so state will need to be lifted up
   const [count, setCount] = useState(quantity);
 
@@ -59,3 +78,4 @@ function Quantity({ quantity }) {
     </>
   );
 }
+
