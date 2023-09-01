@@ -1,0 +1,28 @@
+.order-item-container{
+  background-color: white;
+  color: red;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+}
+
+.order-image {
+  height: 60px;
+  width: 60px;
+}
+
+.item-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
+}
+
+.item-info {
+  width: 75px;
+}
+
+.price-total {
+  width: 75px
+}
+
+
