@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Button, Modal } from "../components";
 
-type Item = { 
-  id: number
-  image: string
-  flavor: string
-  price: number
-  quantity: number
-}
+type Item = {
+  id: number;
+  image: string;
+  flavor: string;
+  price: number;
+  quantity: number;
+};
 
 const itemList: Item[] = [
   { id: 1, image: "", flavor: "strawberry", price: 0, quantity: 1 },
@@ -21,16 +21,22 @@ type CartType = {
 };
 
 export default function Cart({ isOpen, onClose }: CartType) {
-  function handleDeleteItem() {
-    // TODO
+  const [items, setItems] = useState(itemList);
+
+  function handleDeleteItem(id: Item["id"]) {
+    setItems((items) => items.filter((item) => item.id !== id));
   }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       {/* Currently getting data from a constant but will eventually either need to be passed into the component
             of fetched from an API */}
-      {itemList.map((item) => (
-        <CartItem item={item} onDeleteItem={handleDeleteItem} key={item.id} />
+      {items.map((item) => (
+        <CartItem
+          item={item}
+          onDeleteItem={() => handleDeleteItem(item.id)}
+          key={item.id}
+        />
       ))}
     </Modal>
   );
@@ -39,7 +45,7 @@ export default function Cart({ isOpen, onClose }: CartType) {
 type CartItemType = {
   item: Item;
   onDeleteItem: (id: Item["id"]) => void;
-}
+};
 
 function CartItem({ item, onDeleteItem }: CartItemType) {
   return (
@@ -51,8 +57,7 @@ function CartItem({ item, onDeleteItem }: CartItemType) {
   );
 }
 
-
-function ItemDetails({ item }: {item: Item}) {
+function ItemDetails({ item }: { item: Item }) {
   return (
     <div>
       <img src={item.image} alt={item.flavor} />
@@ -62,11 +67,15 @@ function ItemDetails({ item }: {item: Item}) {
   );
 }
 
-function RemoveBtn({ onDeleteItem }: {onDeleteItem: CartItemType["onDeleteItem"]}) {
+function RemoveBtn({
+  onDeleteItem,
+}: {
+  onDeleteItem: CartItemType["onDeleteItem"];
+}) {
   return <Button action={onDeleteItem}>Remove</Button>;
 }
 
-function Quantity({ quantity }: {quantity: Item["quantity"]}) {
+function Quantity({ quantity }: { quantity: Item["quantity"] }) {
   // TODO Will eventually need to update item data based on change in count, so state will need to be lifted up
   const [count, setCount] = useState(quantity);
 
@@ -78,4 +87,3 @@ function Quantity({ quantity }: {quantity: Item["quantity"]}) {
     </>
   );
 }
-
