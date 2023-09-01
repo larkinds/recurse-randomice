@@ -16,8 +16,8 @@ export default function FlavorThumbnail( {flavor} : {flavor: Flavor}) {
         src={flavor.image}
         alt={`Photo of ${flavor.name}`}
       />
-      <p><strong>{flavor.name}</strong></p>
-      <p>${flavor.price}</p>
+      <p className={styles.text}><strong>{flavor.name}</strong></p>
+      <p className={styles.text}>${flavor.price}</p>
     </div>
     </>
 
