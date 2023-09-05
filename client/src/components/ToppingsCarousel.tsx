@@ -14,34 +14,37 @@ const left = 0
 const right = 180
 
 function ToppingsCarousel() {
-    const [toppingImgUrls, setToppingImgUrls] = useState([ Caramel, Marshmallow, Strawberry, Chocolate, Nuts, Sprinkles ]);
+    const [toppingImgUrls, setToppingImgUrls] = useState([Caramel, Marshmallow, Strawberry, Chocolate, Nuts, Sprinkles]);
     function rotateArr(direction: string): void {
         // don't mutate original array. make a copy then mutate the copy
         let newArr: string[] = toppingImgUrls.slice();
-
-        if (direction == 'left') {
-            // .shift() removes and returns the first element of the array.
-            // .push() pushes the value onto the end of the array.
-            newArr.push(newArr.shift());
-        } else {
-            // .pop() removes and returns the last element of the array.
-            // .unshift() 'pushes' the value onto the beginning of the array.
-            newArr.unshift(newArr.pop());
+        if (newArr.length > 1) {
+            if (direction == 'left') {
+                // .shift() removes and returns the first element of the array.
+                // .push() pushes the value onto the end of the array.
+                let x = newArr.shift();
+                if (x) newArr.push(x);
+            } else {
+                // .pop() removes and returns the last element of the array.
+                // .unshift() 'pushes' the value onto the beginning of the array.
+                let x = newArr.pop();
+                if (x) newArr.unshift(x);
+            }
         }
         setToppingImgUrls(newArr);
     }
-    
-  return (
-    <div style={{ display: 'flex', flexDirection: 'row', overflow: 'auto'}}>
-        <ArrowButton rotation={left} buttonFunc={rotateArr}/>
-        {toppingImgUrls.map((url, index) => (
-            <div key={url} hidden={index > 4 ? true : false}>
-                <ToppingButton url={url} />
-            </div>
-        ))}
-        <ArrowButton rotation={right} buttonFunc={rotateArr}/>
-    </div>
-  );
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'row', overflow: 'auto' }}>
+            <ArrowButton rotation={left} buttonFunc={rotateArr} />
+            {toppingImgUrls.map((url, index) => (
+                <div key={url} hidden={index > 4 ? true : false}>
+                    <ToppingButton url={url} />
+                </div>
+            ))}
+            <ArrowButton rotation={right} buttonFunc={rotateArr} />
+        </div>
+    );
 }
 
 export default ToppingsCarousel;
