@@ -20,8 +20,12 @@ function ToppingsCarousel() {
         let newArr: string[] = toppingImgUrls.slice();
 
         if (direction == 'left') {
+            // .shift() removes and returns the first element of the array.
+            // .push() pushes the value onto the end of the array.
             newArr.push(newArr.shift());
         } else {
+            // .pop() removes and returns the last element of the array.
+            // .unshift() 'pushes' the value onto the beginning of the array.
             newArr.unshift(newArr.pop());
         }
         setToppingImgUrls(newArr);
