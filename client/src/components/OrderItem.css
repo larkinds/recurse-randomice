@@ -4,25 +4,45 @@
   padding: 15px;
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
+  width: auto;
+  border-width: 2px;
+  border-style: solid;
+  border-color: green;
+  position: relative;
+  justify-content: flex-start;
+  /* direction: ltr; */
 }
 
 .order-image {
   height: 60px;
   width: 60px;
+  /* float: left; */
+  /* position: absolute; */
+  /* padding-right: 1000px; */
 }
 
-.item-details {
+.image-container{ 
+  flex-basis: .2fr;
+}
+
+
+.details-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between
+  justify-content: space-between;
+  flex-basis: 1fr;
+  flex-grow: 1;
 }
 
 .item-info {
-  width: 75px;
+  /* width: 75px; */
+  flex: 1;
 }
 
 .price-total {
-  width: 75px
+  /* width: 75px */
+  flex: 1;
 }
 
 
