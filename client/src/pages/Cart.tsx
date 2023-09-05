@@ -42,16 +42,16 @@ export default function Cart({ isOpen, onClose }: CartProps) {
   );
 }
 
-type CartItemType = {
+type CartItemProps = {
   item: Item;
   onDeleteItem: (id: Item["id"]) => void;
 };
 
-function CartItem({ item, onDeleteItem }: CartItemType) {
+function CartItem({ item, onDeleteItem }: CartItemProps) {
   return (
     <div>
       <ItemDetails item={item} />
-      <RemoveBtn onDeleteItem={onDeleteItem} />
+      <Button action={() => onDeleteItem(item.id)}>Remove</Button>
       <Quantity quantity={item.quantity} />
     </div>
   );
@@ -65,14 +65,6 @@ function ItemDetails({ item }: { item: Item }) {
       <p> ${item.price} </p>
     </div>
   );
-}
-
-function RemoveBtn({
-  onDeleteItem,
-}: {
-  onDeleteItem: CartItemType["onDeleteItem"];
-}) {
-  return <Button action={onDeleteItem}>Remove</Button>;
 }
 
 function Quantity({ quantity }: { quantity: Item["quantity"] }) {
