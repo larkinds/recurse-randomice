@@ -10,21 +10,32 @@ import Marshmallow from "../assets/images/toppings/marshmallow.png"
 
 import "./ToppingsCarousel.css";
 
-const imgUrls = [ Caramel, Marshmallow, Strawberry, Chocolate, Nuts, Sprinkles ]
-
 const left = 0
 const right = 180
-function ToppingsCarousel() {
 
+function ToppingsCarousel() {
+    const [toppingImgUrls, setToppingImgUrls] = useState([ Caramel, Marshmallow, Strawberry, Chocolate, Nuts, Sprinkles ]);
+    function rotateArr(direction: string): void {
+        // don't mutate original array. make a copy then mutate the copy
+        let newArr: string[] = toppingImgUrls.slice();
+
+        if (direction == 'left') {
+            newArr.push(newArr.shift());
+        } else {
+            newArr.unshift(newArr.pop());
+        }
+        setToppingImgUrls(newArr);
+    }
+    
   return (
     <div style={{ display: 'flex', flexDirection: 'row', overflow: 'auto'}}>
-        <ArrowButton rotation={left} />
-        {imgUrls.map((url) => (
+        <ArrowButton rotation={left} buttonFunc={rotateArr}/>
+        {toppingImgUrls.map((url) => (
             <div key={url}>
                 <ToppingButton url={url} />
             </div>
         ))}
-        <ArrowButton rotation={right} />
+        <ArrowButton rotation={right} buttonFunc={rotateArr}/>
     </div>
   );
 }
