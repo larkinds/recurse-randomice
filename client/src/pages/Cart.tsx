@@ -15,12 +15,12 @@ const itemList: Item[] = [
   { id: 3, image: "", flavor: "vanilla", price: 0, quantity: 2 },
 ];
 
-type CartType = {
+type CartProps = {
   isOpen: boolean;
   onClose: () => void;
 };
 
-export default function Cart({ isOpen, onClose }: CartType) {
+export default function Cart({ isOpen, onClose }: CartProps) {
   const [items, setItems] = useState(itemList);
 
   function handleDeleteItem(id: Item["id"]) {
