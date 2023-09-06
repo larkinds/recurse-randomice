@@ -7,7 +7,7 @@ function ToppingsBar() {
 
   return (
     <>
-      <div className="toppingsBar" style={{ textAlign: 'center' }}>
+      <div className='toppingbar-title'>
         <strong>toppings</strong>
         <ToppingsCarousel />
       </div>

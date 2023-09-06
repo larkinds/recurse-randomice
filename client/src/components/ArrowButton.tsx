@@ -1,25 +1,18 @@
-import { useState } from "react";
 import Arrow from "../assets/images/arrow.png"
 
 import "./ArrowButton.css";
 
 interface ArrowProps {
-    rotation: number // 0 points left, 90 points up, 180 points right, 270 points down
-    buttonFunc: (direction: string) => void
+  rotation: number // 0 points left, 90 points up, 180 points right, 270 points down
+  buttonFunc: (direction: string) => void
 }
 
 function ArrowButton(props: ArrowProps) {
 
   return (
-    <>
-        <img src={ Arrow } style={{ 
-            width: '50px', 
-            height: '50px', 
-            marginRight: '10px', 
-            transform: `rotate(${props.rotation}deg)`}} 
-            onClick={()=>props.buttonFunc(`${props.rotation < 180 ? 'left' : 'right'}`)}>
-        </img>
-    </>
+    <img className='arrow-button' src={Arrow} style={{ transform: `rotate(${props.rotation}deg)` }}
+      onClick={() => props.buttonFunc(`${props.rotation < 180 ? 'left' : 'right'}`)}>
+    </img>
   );
 }
 

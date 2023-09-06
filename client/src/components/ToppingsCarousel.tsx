@@ -35,7 +35,7 @@ function ToppingsCarousel() {
     }
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'row', overflow: 'auto' }}>
+        <div className='toppings-carousel'>
             <ArrowButton rotation={left} buttonFunc={rotateArr} />
             {toppingImgUrls.map((url, index) => (
                 <div key={url} hidden={index > 4 ? true : false}>
