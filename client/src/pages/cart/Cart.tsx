@@ -49,39 +49,48 @@ export default function Cart({ isOpen, onClose }: CartProps) {
     setItems((items) => items.filter((item) => item.id !== id));
   }
 
+  function handleUpdateQuantity(id: Item["id"], newQuantity: Item["quantity"]) {
+    const updatedItems = items.map((item) => {
+      if (item.id === id) {
+        return { ...item, quantity: newQuantity };
+      }
+      return item;
+    });
+
+    setItems(updatedItems);
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} className={styles.modal}>
       {/* Currently getting data from a constant but will eventually either need to make this dynamic */}
       {items.map((item) => (
-        <CartItem
-          item={item}
-          onDeleteItem={() => handleDeleteItem(item.id)}
-          key={item.id}
-        />
+        <CartItem key={item.id}>
+          <ItemDetails item={item} />
+          <div className={styles.actionBtns}>
+            <RemoveBtn itemId={item.id} onDeleteItem={handleDeleteItem} />
+            <Quantity item={item} onUpdate={handleUpdateQuantity} />
+          </div>
+        </CartItem>
       ))}
     </Modal>
   );
 }
 
-type CartItemProps = {
-  item: Item;
-  onDeleteItem: (id: Item["id"]) => void;
-};
+function CartItem({ children }: { children: React.ReactNode }) {
+  return <div className={styles.cartItem}>{children}</div>;
+}
 
-function CartItem({ item, onDeleteItem }: CartItemProps) {
+function RemoveBtn({
+  onDeleteItem,
+  itemId,
+}: {
+  onDeleteItem: (id: Item["id"]) => void;
+  itemId: Item["id"];
+}) {
   return (
-    <div className={styles.cartItem}>
-      <ItemDetails item={item} />
-      <div className={styles.actionBtns}>
-        <Button
-          className={styles.removeBtn}
-          action={() => onDeleteItem(item.id)}
-        >
-          Remove
-        </Button>
-        <Quantity quantity={item.quantity} />
-      </div>
-    </div>
+    <Button className={styles.removeBtn} action={() => onDeleteItem(itemId)}>
+      Remove
+    </Button>
   );
 }
 
@@ -97,20 +106,30 @@ function ItemDetails({ item }: { item: Item }) {
   );
 }
 
-function Quantity({ quantity }: { quantity: Item["quantity"] }) {
-  // TODO Will eventually need to update item data based on change in count, so state will need to be lifted up
-  const [count, setCount] = useState(quantity);
+function Quantity({
+  item,
+  onUpdate,
+}: {
+  item: Item;
+  onUpdate: (id: Item["id"], newQuantity: Item["quantity"]) => void;
+}) {
+  function handleIncrement() {
+    onUpdate(item.id, item.quantity + 1);
+  }
+
+  function handleDecrement() {
+    if (item.quantity > 0) {
+      onUpdate(item.id, item.quantity - 1);
+    }
+  }
 
   return (
     <div className={styles.quantity}>
-      <button
-        className={styles.minus}
-        onClick={() => count > 0 && setCount((c) => c - 1)}
-      >
+      <button className={styles.minus} onClick={handleDecrement}>
         -
       </button>
-      <span> {count} </span>
-      <button className={styles.plus} onClick={() => setCount((c) => c + 1)}>
+      <span> {item.quantity} </span>
+      <button className={styles.plus} onClick={handleIncrement}>
         +
       </button>
     </div>
