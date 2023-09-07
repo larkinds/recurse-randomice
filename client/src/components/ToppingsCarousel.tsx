@@ -36,13 +36,13 @@ function ToppingsCarousel() {
 
     return (
         <div className='toppings-carousel'>
-            <ArrowButton rotation={left} buttonFunc={rotateArr} />
+            <ArrowButton rotation={left} handleClick={rotateArr} />
             {toppingImgUrls.map((url, index) => (
                 <div key={url} hidden={index > 4 ? true : false}>
                     <ToppingButton url={url} />
                 </div>
             ))}
-            <ArrowButton rotation={right} buttonFunc={rotateArr} />
+            <ArrowButton rotation={right} handleClick={rotateArr} />
         </div>
     );
 }
