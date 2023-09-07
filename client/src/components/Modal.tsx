@@ -28,7 +28,19 @@ export default function Modal({
   }, [isOpen]);
   return (
     <dialog ref={modalRef} className={className}>
-      <button onClick={onClose}>Close</button>
+      <button
+        onClick={onClose}
+        style={{
+          border: "none",
+          backgroundColor: "inherit",
+          position: "absolute",
+          right: "1rem",
+          marginBottom: "1rem",
+          cursor: "pointer",
+        }}
+      >
+        X
+      </button>
       {children}
     </dialog>
   );
