@@ -1,4 +1,4 @@
-import "./suggestions.styles.css";
+import "./Suggestions.css";
 
 type SuggestionItemProps = {
   id: number;
