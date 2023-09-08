@@ -1,8 +1,0 @@
-POST http://localhost:3003/api/icecreams HTTP/1.1
-content-type: application/json
-
-{
-    "name": "Third icecream!",
-    "isUserGenerated": true,
-    "userId": "dgfbnogrb"
-}

@@ -1,12 +1,14 @@
 import express, { Express, Request, Response } from 'express';
 import dbConnect from './lib/dbConnect';
 import { PORT } from './utils/config';
-import { routes } from './routes';
+import icecreamRouter from './controllers/icecreams';
+import userRouter from './controllers/users';
 
 const app: Express = express();
 const port = PORT;
 
-app.use('/', routes);
+app.use('/api/icecreams', icecreamRouter);
+app.use('/api/users', userRouter);
 
 const start = async () => {
   try {
