@@ -4,14 +4,16 @@ type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
-  className?: string;
+  containerClassNames?: string;
+  buttonClassNames?: string;
 };
 
 export default function Modal({
   onClose,
   isOpen,
+  containerClassNames,
+  buttonClassNames,
   children,
-  className,
 }: ModalProps) {
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
@@ -27,18 +29,8 @@ export default function Modal({
     }
   }, [isOpen]);
   return (
-    <dialog ref={modalRef} className={className}>
-      <button
-        onClick={onClose}
-        style={{
-          border: "none",
-          backgroundColor: "inherit",
-          position: "absolute",
-          right: "1rem",
-          marginBottom: "1rem",
-          cursor: "pointer",
-        }}
-      >
+    <dialog ref={modalRef} className={containerClassNames}>
+      <button onClick={onClose} className={buttonClassNames}>
         X
       </button>
       {children}

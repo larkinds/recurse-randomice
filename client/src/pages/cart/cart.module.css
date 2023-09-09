@@ -4,6 +4,15 @@
   left: inherit;
 }
 
+.modalCloseBtn {
+  border: none;
+  background-color: inherit;
+  position: absolute;
+  right: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
 .cartBtn {
   position: absolute;
   top: 0;

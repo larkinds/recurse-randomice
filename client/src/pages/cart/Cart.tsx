@@ -61,7 +61,12 @@ export default function Cart({ isOpen, onClose }: CartProps) {
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} className={styles.modal}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      containerClassNames={styles.modal}
+      buttonClassNames={styles.modalCloseBtn}
+    >
       {/* Currently getting data from a constant but will eventually either need to make this dynamic */}
       {items.map((item) => (
         <CartItem key={item.id}>
