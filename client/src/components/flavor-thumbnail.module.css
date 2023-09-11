@@ -13,6 +13,6 @@
   object-fit: contain;
 }
 
-p {
+.text {
   font-family: 'Roboto', sans-serif;
 }
