@@ -1,8 +1,2 @@
-POST http://localhost:3003/api/orders HTTP/1.1
+GET http://localhost:3003/api/orders/ HTTP/1.1
 content-type: application/json
-
-{
-    "userID": "dgfbnogrb",
-    "date": "2023/09/08",
-    "total": 276
-}
