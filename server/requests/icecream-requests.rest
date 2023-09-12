@@ -11,7 +11,11 @@ POST http://localhost:3003/api/icecreams HTTP/1.1
 content-type: application/json
 
 {
-    "name": "seventh",
+    "name": "jumbo staircase",
     "isUserGenerated": true,
-    "userId": "dgfbnogrb"
+    "userId": "leewiz"
 }
+
+###
+GET http://localhost:3003/api/icecreams/suggestion/3
+

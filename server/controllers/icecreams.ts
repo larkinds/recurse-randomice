@@ -1,4 +1,4 @@
-import Icecream from "../models/Icecream";
+import Icecream, { Icecreams } from "../models/Icecream";
 import express, { Request, Response } from 'express'
 
 const icecreamRouter = express.Router()
@@ -11,8 +11,19 @@ icecreamRouter.get('/name/:name',  async (request: Request, response: Response) 
 })
 
 icecreamRouter.get('/',  async (request: Request, response: Response) => {
+  // const body = request.body;
   const icecreams = await Icecream.find({})
   response.status(200).json(icecreams).send()
+})
+
+icecreamRouter.get('/suggestion/:quantity',  async (request: Request, response: Response) => {
+  const suggestionQuantity = Number(request.params.quantity)
+  const icecreams = await Icecream.find({})
+  let suggestions: Icecreams[] = [];
+  for(let i = 0; i < suggestionQuantity; i++) {
+    suggestions.push(icecreams[Math.floor(Math.random()*icecreams.length)])
+  }
+  response.status(200).json(suggestions).send()
 })
 
 icecreamRouter.get('/id/:id',  async (request: Request, response: Response) => {
