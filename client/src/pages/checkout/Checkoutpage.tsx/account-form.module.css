@@ -1,0 +1,13 @@
+.account-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    margin: .4rem;
+    color: grey;
+}
+
+/* .input:invalid {
+    color: red;
+} */
