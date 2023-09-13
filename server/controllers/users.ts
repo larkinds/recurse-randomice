@@ -25,12 +25,10 @@ userRouter.post('/', async (request: Request, response: Response) => {
       password: hashedpassword,
     })
 
-    console.log(user)
-
     const insertedUser = await user.save()
     response.status(201).json(insertedUser).send()
   } catch (error) {
-    console.log(error)
+
     response.status(400).json({ error }).send('message')
   }
 })
