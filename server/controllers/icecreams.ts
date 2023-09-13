@@ -17,7 +17,7 @@ icecreamRouter.get("/", async (request: Request, response: Response) => {
   response.status(200).json(icecreams).send();
 });
 
-icecreamRouter.get("/suggestion/:quantity", async (request: Request, response: Response) => {
+icecreamRouter.get("/suggestions/:quantity", async (request: Request, response: Response) => {
   const suggestionQuantity = Number(request.params.quantity);
   const icecreams = await Icecream.find({});
 
