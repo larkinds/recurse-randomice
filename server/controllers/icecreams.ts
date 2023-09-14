@@ -1,6 +1,5 @@
-import { off } from "process";
-import Icecream, { Icecreams } from "../models/Icecream";
 import express, { Request, Response } from "express";
+import Icecream, { Icecreams } from "../models/Icecream";
 
 const icecreamRouter = express.Router();
 icecreamRouter.use(express.json());
