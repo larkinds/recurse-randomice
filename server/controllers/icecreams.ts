@@ -5,13 +5,12 @@ const icecreamRouter = express.Router();
 icecreamRouter.use(express.json());
 
 icecreamRouter.get("/name/:name", async (request: Request, response: Response) => {
-  const iceName = request.params.name;
-  const icecream = await Icecream.findOne({ name: iceName }).exec();
+  const icecreamName = request.params.name;
+  const icecream = await Icecream.findOne({ name: icecreamName }).exec();
   response.status(200).json(icecream).send();
 });
 
 icecreamRouter.get("/", async (request: Request, response: Response) => {
-  // const body = request.body;
   const icecreams = await Icecream.find({});
   response.status(200).json(icecreams).send();
 });
