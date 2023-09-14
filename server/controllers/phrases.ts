@@ -7,31 +7,58 @@ const phraseRouter = express.Router()
 phraseRouter.use(express.json())
 
 phraseRouter.get('/noun',  async (request: Request, response: Response) => {
-  var random = Math.floor(Math.random() * 1000)
+  var random = Math.floor(Math.random() * 3)
   const noun = await Nouns.findOne().skip(random).exec()
   response.status(200).json(noun).send()
 })
 
 
+phraseRouter.get('/adjective',  async (request: Request, response: Response) => {
+  var random = Math.floor(Math.random() * 3)
+  const adjective = await Adjectives.findOne().skip(random).exec()
+  response.status(200).json(adjective).send()
+})
 
-// DEV ONLY: use this to insert array of toppings
-// toppingRouter.post('/', async (request: Request, response: Response) => {
-//     try{
-//     const body = request.body
-//     const insertedToppings = []
-//     for(const topping of body) {
-//         const newTopping = new Topping({ ...topping  })
+phraseRouter.post('/noun',  async (request: Request, response: Response) => {
+  try{
+    const body = request.body
+  
+    if (!body.name) {
+      response.status(400).json({ 
+        error: 'noun is missing' 
+      }).send()
+    }
+  
+    const noun = new Nouns({ ...request.body  })
+  
+    const insertedNoun= await noun.save();
+    response.status(201).json(insertedNoun).send();
 
-//         const insertedTopping = await newTopping.save();
-//         insertedToppings.push(insertedTopping)
-//     }
-//     response.status(201).json(insertedToppings).send();
+    } catch (error) {
+        console.log(error)
+        response.status(400).json({error}).send("message")
+    }
+  })
 
+phraseRouter.post('/adjective',  async (request: Request, response: Response) => {
+  try{
+    const body = request.body
+  
+    if (!body.name) {
+      response.status(400).json({ 
+        error: 'noun is missing' 
+      }).send()
+    }
+  
+    const adjective = new Adjectives({ ...request.body  })
+  
+    const insertedAdjective= await adjective.save();
+    response.status(201).json(insertedAdjective).send();
 
-//     } catch (error) {
-//         console.log(error)
-//         response.status(400).json({error}).send("message")
-//     }
-//   })
+    } catch (error) {
+        console.log(error)
+        response.status(400).json({error}).send("message")
+    }
+  })
 
-export default adjectiveRouter
+export default phraseRouter
