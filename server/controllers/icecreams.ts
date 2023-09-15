@@ -50,21 +50,18 @@ icecreamRouter.post("/", async (request: Request, response: Response) => {
     const body = request.body;
 
     if (!body.name) {
-      response
-        .status(400)
-        .json({
-          error: "content missing",
-        })
-        .send();
+      response.status(400).json({
+        error: "content missing",
+      });
+      return;
     }
 
     const icecream = new Icecream({ ...request.body });
 
     const insertedIcecream = await icecream.save();
-    response.status(201).json(insertedIcecream).send();
+    response.status(201).json(insertedIcecream);
   } catch (error) {
-    console.log(error);
-    response.status(400).json({ error }).send("message");
+    response.status(400).json({ error });
   }
 });
 
