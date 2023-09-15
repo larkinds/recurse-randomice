@@ -20,3 +20,19 @@ content-type: application/json
 
 ###
 GET http://localhost:3003/api/words/adjective 
+
+###
+POST http://localhost:3003/api/words/insertAdjectives HTTP/1.1
+content-type: application/json
+
+{
+
+}
+
+###
+POST http://localhost:3003/api/words/insertNouns HTTP/1.1
+content-type: application/json
+
+{
+
+}
