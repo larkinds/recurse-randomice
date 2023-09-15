@@ -7,12 +7,12 @@ icecreamRouter.use(express.json());
 icecreamRouter.get("/name/:name", async (request: Request, response: Response) => {
   const icecreamName = request.params.name;
   const icecream = await Icecream.findOne({ name: icecreamName }).exec();
-  response.status(200).json(icecream).send();
+  response.status(200).json(icecream);
 });
 
 icecreamRouter.get("/", async (request: Request, response: Response) => {
   const icecreams = await Icecream.find({});
-  response.status(200).json(icecreams).send();
+  response.status(200).json(icecreams);
 });
 
 icecreamRouter.get("/suggestions/:quantity", async (request: Request, response: Response) => {
@@ -20,7 +20,7 @@ icecreamRouter.get("/suggestions/:quantity", async (request: Request, response: 
   const icecreams = await Icecream.find({});
 
   if (suggestionQuantity > icecreams.length) {
-    response.status(200).json(icecreams).send();
+    response.status(200).json(icecreams);
     return;
   }
 
@@ -36,13 +36,13 @@ icecreamRouter.get("/suggestions/:quantity", async (request: Request, response: 
     suggestions.push(icecreams[index]);
   }
 
-  response.status(200).json(suggestions).send();
+  response.status(200).json(suggestions);
 });
 
 icecreamRouter.get("/id/:id", async (request: Request, response: Response) => {
   const iceID = request.params.id;
   const icecream = await Icecream.findById(iceID);
-  response.status(200).json(icecream).send();
+  response.status(200).json(icecream);
 });
 
 icecreamRouter.post("/", async (request: Request, response: Response) => {
