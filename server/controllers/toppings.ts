@@ -6,7 +6,7 @@ toppingRouter.use(express.json());
 
 toppingRouter.get("/", async (request: Request, response: Response) => {
   const toppings = await Topping.find({});
-  response.status(200).json(toppings).send();
+  response.status(200).json(toppings);
 });
 
 // DEV ONLY: use this to insert array of toppings
@@ -20,11 +20,11 @@ toppingRouter.get("/", async (request: Request, response: Response) => {
 //         const insertedTopping = await newTopping.save();
 //         insertedToppings.push(insertedTopping)
 //     }
-//     response.status(201).json(insertedToppings).send();
+//     response.status(201).json(insertedToppings);
 
 //     } catch (error) {
 //         console.log(error)
-//         response.status(400).json({error}).send("message")
+//         response.status(400).json({error});
 //     }
 //   })
 

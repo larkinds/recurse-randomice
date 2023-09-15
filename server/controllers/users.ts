@@ -1,66 +1,59 @@
-import express, { Request, Response } from 'express'
-import User from '../models/User'
-import * as argon2 from 'argon2'
+import express, { Request, Response } from "express";
+import User from "../models/User";
+import * as argon2 from "argon2";
 
-const userRouter = express.Router()
-userRouter.use(express.json())
+const userRouter = express.Router();
+userRouter.use(express.json());
 
-userRouter.post('/', async (request: Request, response: Response) => {
+userRouter.post("/", async (request: Request, response: Response) => {
   try {
-    const { username, password } = request.body
+    const { username, password } = request.body;
 
     if (!username) {
-      response
-        .status(400)
-        .json({
-          error: 'username missing',
-        })
-        .send()
+      response.status(400).json({
+        error: "username missing",
+      });
     }
 
-    const hashedpassword = await argon2.hash(password)
+    const hashedpassword = await argon2.hash(password);
 
     const user = new User({
       username: username,
       password: hashedpassword,
-    })
+    });
 
-    console.log(user)
+    console.log(user);
 
-    const insertedUser = await user.save()
-    response.status(201).json(insertedUser).send()
+    const insertedUser = await user.save();
+    response.status(201).json(insertedUser);
   } catch (error) {
-    console.log(error)
-    response.status(400).json({ error }).send('message')
+    console.log(error);
+    response.status(400).json({ error });
   }
-})
+});
 
-userRouter.post('/login', async (request: Request, response: Response) => {
+userRouter.post("/login", async (request: Request, response: Response) => {
   try {
-    const { username, password } = request.body
+    const { username, password } = request.body;
 
     if (!username) {
-      response
-        .status(400)
-        .json({
-          error: 'username missing',
-        })
-        .send()
+      response.status(400).json({
+        error: "username missing",
+      });
     }
-    const user = await User.findOne({ username })
+    const user = await User.findOne({ username });
 
-    const match = await argon2.verify(user.password, password)
+    const match = await argon2.verify(user.password, password);
 
     if (!match) {
-      throw new Error('Unauthorized')
+      throw new Error("Unauthorized");
     }
 
-    response.status(200).json('Valid login').send()
-    
+    response.status(200).json("Valid login");
   } catch (error) {
-    console.log(error)
-    response.status(400).json({ error }).send('message')
+    console.log(error);
+    response.status(400).json({ error });
   }
-})
+});
 
-export default userRouter
+export default userRouter;
