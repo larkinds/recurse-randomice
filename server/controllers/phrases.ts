@@ -9,13 +9,13 @@ const phraseRouter = express.Router()
 phraseRouter.use(express.json())
 
 phraseRouter.get('/noun', async (request: Request, response: Response) => {
-  var random = Math.floor(Math.random() * 3)
+  var random = Math.floor(Math.random() * 750)
   const noun = await Nouns.findOne().skip(random).exec()
   response.status(200).json(noun).send()
 })
 
 phraseRouter.get('/adjective', async (request: Request, response: Response) => {
-  var random = Math.floor(Math.random() * 3)
+  var random = Math.floor(Math.random() * 500)
   const adjective = await Adjectives.findOne().skip(random).exec()
   response.status(200).json(adjective).send()
 })
