@@ -1,48 +1,60 @@
-import { Reducer, useReducer } from "react";
-import iceCreamReducer, { IceCreamAction, IceCreamItem } from "./reducers/iceCreamReducer";
+import { useReducer } from "react";
+import iceCreamOrderGroupReducer, {
+  IceCreamOrderGroup,
+} from "./reducers/iceCreamReducer";
+
+const initialIceCreamOrderGroups = new Array<IceCreamOrderGroup>();
 
 export default function App() {
-  const [icecreams, dispatch] = useReducer<Reducer<IceCreamItem[], IceCreamAction>>(iceCreamReducer, initialIceCreams);
+  const [iceCreamOrderGroups, dispatch] = useReducer(
+    iceCreamOrderGroupReducer,
+    initialIceCreamOrderGroups,
+  );
 
-  function handleAddIceCream() {
+  function handleAddIceCreamOrderGroup(iceCreamName: string) {
     dispatch({
-      id: icecreams.length + 1,
-      type: "added",
-      iceCreamItem: {
-        id: icecreams.length + 1, name: "batter up", quantity: 2
-      }
+      type: "add",
+      iceCreamName,
     });
   }
 
-  function handleChangeIceCream(event) {
-    if (event?.target.defaultValue === 'Increment')  {
-      
-    }
-  }
-
-  function handleDeleteIceCream(iceCreamId: number) {
+  function handleIncrementIceCreamOrderGroup(iceCreamOrderGroupId: number) {
+    console.log("increment");
     dispatch({
-      type: "deleted",
-      id: iceCreamId,
-      iceCreamItem: undefined,
+      type: "increment",
+      iceCreamOrderGroupId,
     });
   }
 
+  function handleDecrementIceCreamOrderGroup(iceCreamOrderGroupId: number) {
+    dispatch({
+      type: "decrement",
+      iceCreamOrderGroupId,
+    });
+  }
 
+  function handleDeleteIceCreamOrderGroup(iceCreamOrderGroupId: number) {
+    dispatch({
+      type: "delete",
+      iceCreamOrderGroupId,
+    });
+  }
 
   return (
-    <div>
-      {icecreams.map(iceCream) => <p>{iceCream.name} {iceCream.quantity}</p> }
-      <button onClick={handleAddIceCream}>Add Single IceCream</button>
-      <button onClick={handleChangeIceCream}>Increment</button>
-      <button onClick={handleChangeIceCream}>Decrement</button>
-      <button onClick={handleDeleteIceCream}>Delete</button>
-    </div>
+    <>
+      {iceCreamOrderGroups.map((iceCreamOrderGroup) => (
+        <p key={iceCreamOrderGroup.id}>
+          {iceCreamOrderGroup.iceCreamName}, {iceCreamOrderGroup.quantity}
+        </p>
+      ))}
+      <button onClick={() => handleAddIceCreamOrderGroup("foo")}>Add</button>
+      <button onClick={() => handleIncrementIceCreamOrderGroup(1)}>
+        Increment
+      </button>
+      <button onClick={() => handleDecrementIceCreamOrderGroup(2)}>
+        Decrement
+      </button>
+      <button onClick={() => handleDeleteIceCreamOrderGroup(3)}>Delete</button>
+    </>
   );
 }
-
-let initialIceCreams: IceCreamItem[] = [
-  { id: 1, name: "strawberry", quantity: 1 },
-  { id: 2, name: "chocolate",  quantity: 3 },
-  { id: 3, name: "vanilla", quantity: 2 },
-];;

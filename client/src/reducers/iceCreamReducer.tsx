@@ -1,50 +1,80 @@
-import { Reducer, ReducerWithoutAction } from "react";
-
-export interface IceCreamItem {
+export type IceCreamOrderGroup = {
   id: number;
   quantity: number;
-  name: string;
-}
+  iceCreamName: string;
+};
 
-export interface IceCreamAction {
-  id: number;
-  type: string;
-  iceCreamItem: IceCreamItem | undefined;
-}
+export type IceCreamOrderGroupAction =
+  | AddIceCreamOrderGroupAction
+  | IncrementIceCreamOrderGroupAction
+  | DecrementIceCreamOrderGroupAction
+  | DeleteIceCreamOrderGroupAction;
 
-//to do: be careful not to action.add an icecream that already exists:
-//in the components that add an icecream, check the reducer's state for an ice cream before adding
+type AddIceCreamOrderGroupAction = {
+  type: "add";
+  iceCreamName: string;
+};
 
-export default function iceCreamsReducer(
-  iceCreamItems: IceCreamItem[],
-  action: IceCreamAction,
+type IncrementIceCreamOrderGroupAction = {
+  type: "increment";
+  iceCreamOrderGroupId: number;
+};
+
+type DecrementIceCreamOrderGroupAction = {
+  type: "decrement";
+  iceCreamOrderGroupId: number;
+};
+
+type DeleteIceCreamOrderGroupAction = {
+  type: "delete";
+  iceCreamOrderGroupId: number;
+};
+
+export default function iceCreamOrderGroupReducer(
+  previousState: IceCreamOrderGroup[],
+  action: IceCreamOrderGroupAction,
 ) {
   switch (action.type) {
-    case "added": {
+    case "add": {
       return [
-        ...iceCreamItems,
+        ...previousState,
         {
-          id: action.id,
+          id: previousState.length, // Note: There's an issue here. `id` is not a property of `AddIceCreamOrderGroupAction`
           quantity: 1,
-          name: action.iceCreamItem.name,
+          iceCreamName: action.iceCreamName,
         },
       ];
     }
-    case "changed": {
-      return iceCreamItems.map((iceCreamItem) => {
-        if (iceCreamItem.id === action.iceCreamItem.id) {
-          return action.iceCreamItem;
+    case "increment": {
+      console.log("foo");
+      return previousState.map((iceCreamOrderGroup) => {
+        if (iceCreamOrderGroup.id === action.iceCreamOrderGroupId) {
+          return {
+            ...iceCreamOrderGroup,
+            quantity: iceCreamOrderGroup.quantity + 1,
+          };
         } else {
-          return iceCreamItem;
+          return iceCreamOrderGroup;
         }
       });
     }
-    case "deleted": {
-      return iceCreamItems.filter((item) => item.id !== action.id);
+    case "decrement": {
+      return previousState.map((iceCreamOrderGroup) => {
+        if (iceCreamOrderGroup.id === action.iceCreamOrderGroupId) {
+          return {
+            ...iceCreamOrderGroup,
+            quantity: iceCreamOrderGroup.quantity - 1,
+          };
+        } else {
+          return iceCreamOrderGroup;
+        }
+      });
     }
-    default:
-      throw new Error("no such action");
+    case "delete": {
+      return previousState.filter(
+        (iceCreamOrderGroup) =>
+          iceCreamOrderGroup.id !== action.iceCreamOrderGroupId,
+      );
+    }
   }
 }
-
-[{ id: 0 }, {}, {}];
