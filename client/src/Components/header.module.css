@@ -9,3 +9,11 @@
     list-style-type: none;
     margin-bottom: 0px;
 }
+
+.nav-item {
+    margin-right: 10px;
+}
+
+.login-button {
+    margin-right: 10px;
+}
