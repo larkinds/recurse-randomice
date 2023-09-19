@@ -1,0 +1,11 @@
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.nav-container {
+    display: flex;
+    list-style-type: none;
+    margin-bottom: 0px;
+}
