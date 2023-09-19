@@ -1,13 +1,26 @@
 import { useState } from "react";
-import IceCreamLogo from "./Logo";
+import IceCreamLogo from "./IceCreamLogo";
 import styles from "./header.module.css";
+import ShoppingCartLogo from "./ShoppingCartLogo";
 
 export default function IceCreamHeader() {
+  // update this to use react router useLocation
+  // when react router is added to the project
   const [page, setPage] = useState("/");
   let currentPage = page;
 
   function showNavOption(page: string) {
-    return page == currentPage;
+    let linkStyle = page == currentPage ? styles["disabled"] : "";
+    let currentPageIndicator = page == currentPage ? "*" : "";
+
+    return (
+      <li className={styles["nav-item"]}>
+        <a href={page} className={linkStyle}>
+          {currentPageIndicator}
+          {page}
+        </a>
+      </li>
+    );
   }
 
   return (
@@ -19,23 +32,15 @@ export default function IceCreamHeader() {
       </a>
       <nav>
         <ul className={styles["nav-container"]}>
-          <li className={styles["nav-item"]}>
-            {/* make these routes actually route */}
-            <a href="/hall-of-fame">
-              {showNavOption("/hall-of-fame") ? "*" : ""}Hall of Fame
-            </a>
-          </li>
-          <li className={styles["nav-item"]}>
-            <a href="/random-flavors">
-              {showNavOption("/random-flavors") ? "*" : ""}Generate Random
-              Flavors
-            </a>
-          </li>
+          {showNavOption("/hall-of-fame")}
+          {showNavOption("/random-flavors")}
         </ul>
       </nav>
       <div>
         <button className={styles["login-button"]}>login/logout</button>
-        <a href="/cart">cart logo</a>
+        <a href="/cart">
+          <ShoppingCartLogo />
+        </a>
       </div>
     </header>
   );

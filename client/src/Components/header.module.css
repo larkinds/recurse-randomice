@@ -17,3 +17,8 @@
 .login-button {
     margin-right: 10px;
 }
+
+.disabled {
+    cursor: default;
+    pointer-events: none;
+}
