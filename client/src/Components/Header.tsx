@@ -19,18 +19,17 @@ export default function IceCreamHeader() {
       </a>
       <nav>
         <ul className={styles["nav-container"]}>
-          <li
-            className={styles["nav-item"]}
-            hidden={showNavOption("/hall-of-fame")}
-          >
+          <li className={styles["nav-item"]}>
             {/* make these routes actually route */}
-            <a href="/hall-of-fame">Hall of Fame</a>
+            <a href="/hall-of-fame">
+              {showNavOption("/hall-of-fame") ? "*" : ""}Hall of Fame
+            </a>
           </li>
-          <li
-            className={styles["nav-item"]}
-            hidden={showNavOption("/random-flavors")}
-          >
-            <a href="/random-flavors">Generate Random Flavors</a>
+          <li className={styles["nav-item"]}>
+            <a href="/random-flavors">
+              {showNavOption("/random-flavors") ? "*" : ""}Generate Random
+              Flavors
+            </a>
           </li>
         </ul>
       </nav>
