@@ -1,54 +1,38 @@
 export type IceCreamOrderGroup = {
-  id: number;
+  id: string;
   quantity: number;
   iceCreamName: string;
 };
 
-export type IceCreamOrderGroupAction =
-  | AddIceCreamOrderGroupAction
-  | IncrementIceCreamOrderGroupAction
-  | DecrementIceCreamOrderGroupAction
-  | DeleteIceCreamOrderGroupAction;
-
-type AddIceCreamOrderGroupAction = {
+export type AddIceCreamOrderGroupAction = {
   type: "add";
+  id: string;
   iceCreamName: string;
 };
 
-type IncrementIceCreamOrderGroupAction = {
-  type: "increment";
-  iceCreamOrderGroupId: number;
-};
-
-type DecrementIceCreamOrderGroupAction = {
-  type: "decrement";
-  iceCreamOrderGroupId: number;
-};
-
-type DeleteIceCreamOrderGroupAction = {
-  type: "delete";
-  iceCreamOrderGroupId: number;
+export type IceCreamOrderGroupAction = {
+  type: "increment" | "decrement" | "delete";
+  id: string;
 };
 
 export default function iceCreamOrderGroupReducer(
   previousState: IceCreamOrderGroup[],
-  action: IceCreamOrderGroupAction,
+  action: AddIceCreamOrderGroupAction | IceCreamOrderGroupAction,
 ) {
   switch (action.type) {
     case "add": {
       return [
         ...previousState,
         {
-          id: previousState.length, // Note: There's an issue here. `id` is not a property of `AddIceCreamOrderGroupAction`
+          id: action.id,
           quantity: 1,
           iceCreamName: action.iceCreamName,
         },
       ];
     }
     case "increment": {
-      console.log("foo");
       return previousState.map((iceCreamOrderGroup) => {
-        if (iceCreamOrderGroup.id === action.iceCreamOrderGroupId) {
+        if (iceCreamOrderGroup.id === action.id) {
           return {
             ...iceCreamOrderGroup,
             quantity: iceCreamOrderGroup.quantity + 1,
@@ -60,7 +44,7 @@ export default function iceCreamOrderGroupReducer(
     }
     case "decrement": {
       return previousState.map((iceCreamOrderGroup) => {
-        if (iceCreamOrderGroup.id === action.iceCreamOrderGroupId) {
+        if (iceCreamOrderGroup.id === action.id) {
           return {
             ...iceCreamOrderGroup,
             quantity: iceCreamOrderGroup.quantity - 1,
@@ -72,8 +56,7 @@ export default function iceCreamOrderGroupReducer(
     }
     case "delete": {
       return previousState.filter(
-        (iceCreamOrderGroup) =>
-          iceCreamOrderGroup.id !== action.iceCreamOrderGroupId,
+        (iceCreamOrderGroup) => iceCreamOrderGroup.id !== action.id,
       );
     }
   }
