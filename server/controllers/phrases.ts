@@ -1,7 +1,7 @@
 import Nouns from '../models/Nouns'
 import Adjectives from '../models/Adjectives'
-import nouns from '../nouns'
-import adjectives from '../adjectives'
+import nouns from '../data/nouns'
+import adjectives from '../data/adjectives'
 
 import express, { Request, Response } from 'express'
 
@@ -9,13 +9,15 @@ const phraseRouter = express.Router()
 phraseRouter.use(express.json())
 
 phraseRouter.get('/noun', async (request: Request, response: Response) => {
-  var random = Math.floor(Math.random() * 750)
+  //hardcoded total number of nouns
+  var random = Math.floor(Math.random() * 2283)
   const noun = await Nouns.findOne().skip(random).exec()
   response.status(200).json(noun).send()
 })
 
 phraseRouter.get('/adjective', async (request: Request, response: Response) => {
-  var random = Math.floor(Math.random() * 500)
+  //hardcoded total number of adjectives
+  var random = Math.floor(Math.random() *  1119)
   const adjective = await Adjectives.findOne().skip(random).exec()
   response.status(200).json(adjective).send()
 })
@@ -75,16 +77,13 @@ phraseRouter.post(
     try {
       const allAdjectives: Object[] = []
       const noDupes = [...new Set<string>(adjectives)]
-      // the mongoose insertMany function had a strange batch size limit so we could do only 500/1093
-      for (let i = 0; i < 500; i++) {
+
+      for (let i = 0; i < noDupes.length; i++) {
         allAdjectives[i] = {
           name: noDupes[i],
           count: 0,
         }
       }
-
-      console.log(noDupes.length)
-
       const insertedAdjectives = await Adjectives.insertMany(allAdjectives)
       response.status(201).json(insertedAdjectives).send()
     } catch (error) {
@@ -100,16 +99,13 @@ phraseRouter.post(
     try {
       const allNouns: Object[] = []
       const noDupes = [...new Set<string>(nouns)]
-      // the mongoose insertMany function had a strange batch size limit so we could do only 750/2333
-      for (let i = 0; i < 750; i++) {
+      
+      for (let i = 0; i < noDupes.length; i++) {
         allNouns[i] = {
           name: noDupes[i],
           count: 0,
         }
       }
-
-      console.log(noDupes.length)
-
       const insertedNouns = await Nouns.insertMany(allNouns)
       response.status(201).json(insertedNouns).send()
     } catch (error) {
