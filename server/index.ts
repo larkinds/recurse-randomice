@@ -5,6 +5,7 @@ import icecreamRouter from './controllers/icecreams';
 import userRouter from './controllers/users';
 import orderItemRouter from './controllers/orderitems';
 import phraseRouter from './controllers/phrases';
+import toppingRouter from './controllers/toppings';
 
 const app: Express = express();
 const port = PORT;
@@ -13,6 +14,7 @@ app.use('/api/icecreams', icecreamRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orderitems', orderItemRouter)
 app.use('/api/words', phraseRouter)
+app.use('/api/toppings', toppingRouter);
 
 const start = async () => {
   try {
@@ -26,4 +28,3 @@ const start = async () => {
 };
 
 start();
-

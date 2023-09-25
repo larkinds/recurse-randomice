@@ -1,17 +1,21 @@
 GET http://localhost:3003/api/icecreams
 
 ###
-GET http://localhost:3003/api/icecreams/id/64f8b3e6c10621839a8e8db8
+GET http://localhost:3003/api/icecreams/id/6500bbaabd5bd2af1ef72c2b
 
 ###
-GET http://localhost:3003/api/icecreams/name/Sixth%20ice-cream!
+GET http://localhost:3003/api/icecreams/name/abominable%20snowman
 
 ###
 POST http://localhost:3003/api/icecreams HTTP/1.1
 content-type: application/json
 
 {
-    "name": "seventh",
+    "name": "starburst supreme",
     "isUserGenerated": true,
-    "userId": "dgfbnogrb"
+    "userId": "eric-barch"
 }
+
+###
+GET http://localhost:3003/api/icecreams/suggestions/3
+
