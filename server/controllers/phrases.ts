@@ -5,19 +5,21 @@ import adjectives from '../data/adjectives'
 
 import express, { Request, Response } from 'express'
 
+//hardcoded total number for nouns and adjectives
+const NOUNS = 2283
+const ADJS = 1119
+
 const phraseRouter = express.Router()
 phraseRouter.use(express.json())
 
 phraseRouter.get('/noun', async (request: Request, response: Response) => {
-  //hardcoded total number of nouns
-  var random = Math.floor(Math.random() * 2283)
+  var random = Math.floor(Math.random() * NOUNS)
   const noun = await Nouns.findOne().skip(random).exec()
   response.status(200).json(noun).send()
 })
 
 phraseRouter.get('/adjective', async (request: Request, response: Response) => {
-  //hardcoded total number of adjectives
-  var random = Math.floor(Math.random() *  1119)
+  var random = Math.floor(Math.random() * ADJS)
   const adjective = await Adjectives.findOne().skip(random).exec()
   response.status(200).json(adjective).send()
 })
@@ -55,7 +57,7 @@ phraseRouter.post(
         response
           .status(400)
           .json({
-            error: 'noun is missing',
+            error: 'adjective is missing',
           })
           .send()
       }
