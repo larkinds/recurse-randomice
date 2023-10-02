@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { LocalStorageContext } from "../context/DataContext";
 import "./productcard.css";
 
 type ProductCardProps = {
@@ -13,6 +14,8 @@ export default function ProductCard(
   props
   : ProductCardProps) {
   const [scoopsCounter, setScoopsCounter] = useState<number>(0);
+  const localStorage = useContext(LocalStorageContext);
+  console.log({localStorage})
 
   return (
     <div className="single-product-grid">
@@ -20,6 +23,7 @@ export default function ProductCard(
         <p>
           <strong>revolutionary offer:</strong> $0
         </p>
+        <p>{localStorage?.user}</p>
         <img src={props.image} style={{ width: "250px", height: "250px" }} />
         <div>
           <button>add to cart</button>
