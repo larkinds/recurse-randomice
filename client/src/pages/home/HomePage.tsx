@@ -7,17 +7,13 @@ const makePhrases = async (len: number) => {
   const userFlavors: Flavor[] = new Array<Flavor>();
 
   for (let i = 0; i < len; i++) {
-    let phrase = "";
-    await iceCreamService.getAdjective().then((data) => {
-      phrase += data.name;
-    });
-    await iceCreamService.getNoun().then((data) => {
-      phrase = phrase + " " + data.name;
-      userFlavors.push({
-        name: phrase,
-        price: 0,
-        image: "/strawberry-icecream.jpg",
-      });
+    let adjective = (await iceCreamService.getAdjective()).name;
+    let noun = (await iceCreamService.getNoun()).name;
+    let phrase = adjective + " " + noun;
+    userFlavors.push({
+      name: phrase,
+      price: 0,
+      image: "/strawberry-icecream.jpg",
     });
   }
   return userFlavors;
@@ -28,23 +24,19 @@ export default function HomePage() {
   const [userFlavors, setUserFlavors] = useState<Flavor[]>([]);
   const [newFlavor, setNewFlavor] = useState<Flavor>();
 
+  const generateFlavors = async () => {
+    setGeneratedFlavors(await iceCreamService.getFive());
+    setUserFlavors(await makePhrases(5));
+    setNewFlavor((await makePhrases(1)).pop());
+  };
+
   useEffect(() => {
-    iceCreamService.getFive().then((data) => {
-      setGeneratedFlavors(data);
-    });
-    makePhrases(5).then((data) => {
-      setUserFlavors(data);
-    });
-    makePhrases(1).then((data) => {
-      setNewFlavor(data[0]);
-    });
+    generateFlavors();
   }, []);
 
-  function handleRegenerateClick() {
+  async function handleRegenerateClick() {
     console.log("clicked");
-    makePhrases(1).then((data) => {
-      setNewFlavor(data[0]);
-    });
+    setNewFlavor((await makePhrases(1)).pop());
   }
 
   return (
