@@ -1,11 +1,7 @@
 import { useCallback, useState } from "react";
 import IceCreamLogo from "./IceCreamLogo";
 import styles from "./header.module.css";
-import ShoppingCartLogo from "./ShoppingCartLogo";
-
-interface HeaderProps {
-  currentPage: string;
-}
+import CartPage from "../pages/cart/CartPage";
 
 export default function IceCreamHeader() {
   // update this to use react router useLocation
@@ -39,11 +35,9 @@ export default function IceCreamHeader() {
           />
         </ul>
       </nav>
-      <div>
+      <div className={styles["header-end"]}>
         <button className={styles["login-button"]}>login/logout</button>
-        <a href="/cart">
-          <ShoppingCartLogo />
-        </a>
+        <CartPage />
       </div>
     </header>
   );

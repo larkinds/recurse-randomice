@@ -22,3 +22,8 @@
     cursor: default;
     pointer-events: none;
 }
+
+.header-end {
+    display: flex;
+    min-width: 10rem;
+}
