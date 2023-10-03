@@ -4,6 +4,7 @@ import { LocalStorageContext } from "./context/DataContext";
 import { StorageData } from "./utils/Types";
 import ProductCard from "./components/ProductCard";
 
+
 const fakeUser: StorageData = {
   user: "Larkin",
 };
@@ -23,16 +24,16 @@ const fakeUserTwo: StorageData = {
 };
 
 export default function App() {
-  const localStorageCopy: StorageData = fetchAllItemsFromLocalStorage();
+  const localStorageCopy: StorageData | null = fetchAllItemsFromLocalStorage();
   console.log(localStorageCopy);
-  const [value, setValue] = useSetLocalStorage(localStorageCopy, "Test");
+  const [storage, setStorage] = useSetLocalStorage(localStorageCopy, "Test");
 
   return (
-    <LocalStorageContext.Provider value={value}>
+    <LocalStorageContext.Provider value={storage}>
       <div>
-        <button onClick={() => setValue(fakeUser)}>1</button>
-        <button onClick={() => setValue(fakeUserTwo)}>2</button>
-        <p>{value.user}</p>
+        <button onClick={() => setStorage(fakeUser)}>1</button>
+        <button onClick={() => setStorage(fakeUserTwo)}>2</button>
+        <p>{storage?.user}</p>
         {/* <p>{value.value}</p> */}
 
       </div>

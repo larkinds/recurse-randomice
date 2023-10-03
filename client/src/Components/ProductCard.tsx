@@ -24,6 +24,7 @@ export default function ProductCard(
           <strong>revolutionary offer:</strong> $0
         </p>
         <p>{localStorage?.user}</p>
+        <p>{localStorage?.cart?.iceCream[0].name}</p>
         <img src={props.image} style={{ width: "250px", height: "250px" }} />
         <div>
           <button>add to cart</button>

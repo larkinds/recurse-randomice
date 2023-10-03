@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface Topping {
     name: string,
     quantity: number
@@ -13,8 +15,12 @@ export interface Cart {
     toppings: Topping[]
 }
 
-export interface StorageData{
+export interface StorageData {
     user?: string | null;
     cart?: Cart | null;
 }
 
+export interface StorageContext {
+    storageData: StorageData,
+    setStorageData: Dispatch<SetStateAction<StorageData>>
+}

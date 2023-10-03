@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { StorageData } from "../utils/Types";
+import { Cart, StorageData } from "../utils/Types";
 
 const cart: Cart = {
     iceCream: [],
@@ -11,4 +11,7 @@ const fakeCart: StorageData = {
     cart
 }
 
+
+
 export const LocalStorageContext = createContext<StorageData | null>(fakeCart)
+
