@@ -1,10 +1,10 @@
-import mongoose from 'mongoose'
-import uniqueValidator from 'mongoose-unique-validator'
+import mongoose from "mongoose";
+import uniqueValidator from "mongoose-unique-validator";
 
 export interface Users extends mongoose.Document {
-  username: string
-  password: string
-  iceCreamId: string
+  username: string;
+  password: string;
+  iceCreamId: string;
 }
 
 const UserSchema = new mongoose.Schema<Users>({
@@ -19,11 +19,11 @@ const UserSchema = new mongoose.Schema<Users>({
   },
   iceCreamId: {
     type: String || mongoose.Schema.Types.ObjectId,
-    ref: 'Icecream',
+    ref: "Icecream",
   },
-})
+});
 
-UserSchema.plugin(uniqueValidator)
+UserSchema.plugin(uniqueValidator);
 
 export default mongoose.models.User ||
-  mongoose.model<Users>('User', UserSchema)
+  mongoose.model<Users>("User", UserSchema);

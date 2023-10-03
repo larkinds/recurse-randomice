@@ -1,11 +1,10 @@
-import mongoose from 'mongoose'
-import uniqueValidator from 'mongoose-unique-validator'
+import mongoose from "mongoose";
+import uniqueValidator from "mongoose-unique-validator";
 
 export interface Orders extends mongoose.Document {
-userID: string 
-date: Date 
-total: number 
-
+  userID: string;
+  date: Date;
+  total: number;
 }
 
 const OrdersSchema = new mongoose.Schema<Orders>({
@@ -13,7 +12,7 @@ const OrdersSchema = new mongoose.Schema<Orders>({
     type: String || mongoose.Schema.Types.ObjectId,
     required: true,
     unique: true,
-    ref: 'User'
+    ref: "User",
   },
   date: {
     type: Date,
@@ -22,10 +21,10 @@ const OrdersSchema = new mongoose.Schema<Orders>({
   total: {
     type: Number,
     required: true,
-  }, 
-})
+  },
+});
 
-OrdersSchema.plugin(uniqueValidator)
+OrdersSchema.plugin(uniqueValidator);
 
 export default mongoose.models.Orders ||
-  mongoose.model<Orders>('Orders', OrdersSchema)
+  mongoose.model<Orders>("Orders", OrdersSchema);
