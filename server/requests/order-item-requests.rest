@@ -1,0 +1,11 @@
+POST http://localhost:3003/api/orderitems HTTP/1.1
+content-type: application/json
+
+{
+    "orderId": "123456789",
+    "quantity": 1,
+    "iceCreamId": "64fb6f6912f1493fb63d0ddf"
+}
+
+###
+GET http://localhost:3003/api/orderitems/orderId/123456789

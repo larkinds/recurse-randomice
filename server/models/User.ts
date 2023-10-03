@@ -17,11 +17,11 @@ const UserSchema = new mongoose.Schema<Users>({
     type: String,
     required: true,
   },
-  iceCreamId: {
+  iceCreamId: [{
     type: String || mongoose.Schema.Types.ObjectId,
-    ref: "Icecream",
-  },
-});
+    ref: 'Icecream',
+  }],
+})
 
 UserSchema.plugin(uniqueValidator);
 

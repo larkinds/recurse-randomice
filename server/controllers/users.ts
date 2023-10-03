@@ -10,12 +10,9 @@ userRouter.post("/", async (request: Request, response: Response) => {
     const { username, password } = request.body;
 
     if (!username) {
-      response
-        .status(400)
-        .json({
-          error: "username missing",
-        })
-        .send();
+      response.status(400).json({
+        error: "username missing",
+      });
     }
 
     const hashedpassword = await argon2.hash(password);
@@ -25,13 +22,10 @@ userRouter.post("/", async (request: Request, response: Response) => {
       password: hashedpassword,
     });
 
-    console.log(user);
-
     const insertedUser = await user.save();
-    response.status(201).json(insertedUser).send();
+    response.status(201).json(insertedUser);
   } catch (error) {
-    console.log(error);
-    response.status(400).json({ error }).send("message");
+    response.status(400).json({ error });
   }
 });
 
@@ -40,12 +34,9 @@ userRouter.post("/login", async (request: Request, response: Response) => {
     const { username, password } = request.body;
 
     if (!username) {
-      response
-        .status(400)
-        .json({
-          error: "username missing",
-        })
-        .send();
+      response.status(400).json({
+        error: "username missing",
+      });
     }
     const user = await User.findOne({ username });
 
@@ -55,10 +46,10 @@ userRouter.post("/login", async (request: Request, response: Response) => {
       throw new Error("Unauthorized");
     }
 
-    response.status(200).json("Valid login").send();
+    response.status(200).json("Valid login");
   } catch (error) {
     console.log(error);
-    response.status(400).json({ error }).send("message");
+    response.status(400).json({ error });
   }
 });
 
