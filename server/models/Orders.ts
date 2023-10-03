@@ -5,6 +5,7 @@ export interface Orders extends mongoose.Document {
   userID: string;
   date: Date;
   total: number;
+  orderItems: string;
 }
 
 const OrdersSchema = new mongoose.Schema<Orders>({
@@ -22,6 +23,12 @@ const OrdersSchema = new mongoose.Schema<Orders>({
     type: Number,
     required: true,
   },
+  orderItems: [
+    {
+      type: String || mongoose.Schema.Types.ObjectId,
+      ref: "OrderItem",
+    },
+  ],
 });
 
 OrdersSchema.plugin(uniqueValidator);
