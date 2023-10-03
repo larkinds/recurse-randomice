@@ -11,7 +11,5 @@ const fakeCart: StorageData = {
     cart
 }
 
-
-
 export const LocalStorageContext = createContext<StorageData | null>(fakeCart)
 
