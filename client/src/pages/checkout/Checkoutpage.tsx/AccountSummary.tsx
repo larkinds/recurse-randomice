@@ -30,10 +30,10 @@ function AccountSummary(props: AccountSummaryProps) {
         </>
         
       ) : 
-      <>
+      <div className={styles["account-buttons"]}>
         <button type="button" onClick={(() => setNewCustomer(true))} style={{width: "200px"}}>Sign Up</button>
         <button type="button" onClick={() => setGuest(true)} style={{width: "200px"}}>Checkout as Guest</button>
-      </> }
+      </div> }
    
      
     </section>

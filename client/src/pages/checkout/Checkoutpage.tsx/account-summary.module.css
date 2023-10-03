@@ -4,3 +4,7 @@
     justify-content: center;
 }
 
+.account-buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
