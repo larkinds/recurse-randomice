@@ -11,9 +11,10 @@ POST http://localhost:3003/api/icecreams HTTP/1.1
 content-type: application/json
 
 {
-    "name": "starburst supreme",
+    "name": "brazy blueberry",
     "isUserGenerated": true,
-    "userId": "eric-barch"
+    "userId": "eric-barch",
+    "dateCreated":  "2023/10/03"
 }
 
 ###
