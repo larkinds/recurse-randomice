@@ -9,7 +9,6 @@ export default function IceCreamHeader() {
   const [page, setPage] = useState("/");
 
   function getNavOptionPage(navPage: string): void {
-    console.log(page, navPage);
     setPage(navPage);
   }
 
@@ -17,7 +16,7 @@ export default function IceCreamHeader() {
     <header className={styles["header-container"]}>
       <a href="/">
         <IceCreamLogo />
-        <span>IceCream Shop Home</span>
+        <span>Randomice</span>
       </a>
       <nav>
         <ul className={styles["nav-container"]}>
