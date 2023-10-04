@@ -15,3 +15,5 @@ content-type: application/json
     "password": "p@ssw0rd"
 }
 
+###
+GET http://localhost:3003/api/users/username/iris-mu

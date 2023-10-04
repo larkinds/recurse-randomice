@@ -1,20 +1,101 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import Layout from "./components/Layout";
 import HallOfFame from "./pages/hallOfFame/HallOfFame";
 import ErrorPage from "./pages/error/Error";
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  RedirectToSignIn,
+  SignIn,
+  SignUp,
+  UserButton,
+  useUser,
+  SignInButton,
+} from "@clerk/clerk-react";
+import axios from "axios";
+
+if (!import.meta.env.VITE_CLERK_PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key");
+}
+const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
+function SignInComponent() {
+  const { isLoaded, isSignedIn, user } = useUser();
+
+  //add new users to mongoDB
+  useEffect(() => {
+    if (user) {
+      const fetchData = async () => {
+        const exists = await axios.get(
+          `http://localhost:3003/api/users/username/${user.username}`,
+        );
+      };
+    }
+  }, [user]);
+
+  return (
+    <>
+      {isSignedIn ? (
+        <>
+          <UserButton />
+        </>
+      ) : (
+        <SignInButton />
+      )}
+    </>
+  );
+}
 
 //todo: replace temp with homepage
+
+function ClerkProviderWithRoutes() {
+  const navigate = useNavigate();
+  return (
+    <ClerkProvider publishableKey={clerkPubKey} navigate={(to) => navigate(to)}>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <SignInComponent />
+              <div>Temp</div>
+            </>
+          }
+        />
+        <Route
+          path="/sign-in/*"
+          element={<SignIn routing="path" path="/sign-in" />}
+        />
+        <Route
+          path="/sign-up/*"
+          element={<SignUp routing="path" path="/sign-up" />}
+        />
+        <Route path="/hall-of-fame" element={<HallOfFame />} />
+        <Route
+          path="/create"
+          element={
+            <>
+              <SignedIn>
+                <div>Create a Flavor Page </div>
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          }
+        />
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </ClerkProvider>
+  );
+}
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<div>Temp</div>}  />
-          <Route path="hall-of-fame" element={<HallOfFame/>}/>
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </Layout>
+      <ClerkProviderWithRoutes />
     </BrowserRouter>
   );
 }
