@@ -22,7 +22,7 @@ export default function useSetLocalStorage(storageItem: StorageData | null, fall
             key = "both";
         } else if (storage.cart) {
             key = "cart"
-        } else {
+        } else if (storage.user) {
             key = "user"
         }
 
