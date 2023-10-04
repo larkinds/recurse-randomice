@@ -13,10 +13,10 @@ export function fetchAllItemsFromLocalStorage(): StorageData | null {
 
     const storageData: StorageData = {};
 
-    if (user) {
+    if (user && user !== "undefined") {
         storageData.user = JSON.parse(user);
     }
-    if (cart) {
+    if (cart &&  cart !== undefined) {
         storageData.cart = JSON.parse(cart);
     }
 
