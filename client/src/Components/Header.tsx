@@ -1,36 +1,33 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import IceCreamLogo from "./IceCreamLogo";
-import styles from "./header.module.css";
 import CartPage from "../pages/cart/CartPage";
+import styles from "./header.module.css";
+
 
 export default function IceCreamHeader() {
-  // update this to use react router useLocation
-  // when react router is added to the project
-  const [page, setPage] = useState("/");
-
-  function getNavOptionPage(navPage: string): void {
-    setPage(navPage);
+  const [currentPagePath, setCurrentPagePath] = useState<string>("/");
+  
+  function handleSetStarPage(path: string) {
+    setCurrentPagePath(path)
   }
 
   return (
     <header className={styles["header-container"]}>
-      <a href="/">
-        <IceCreamLogo />
-        <span>Randomice</span>
-      </a>
+      <Link to="/" onClick={() => handleSetStarPage("/")}><IceCreamLogo />Randomice</Link>
       <nav>
         <ul className={styles["nav-container"]}>
           <NavOption
             destinationUrl="/hall-of-fame"
             destinationPage="Hall of Fame"
-            currentPageUrl={page}
-            setPage={getNavOptionPage}
+            currentPagePath={currentPagePath}
+            setCurrentPagePath={setCurrentPagePath}
           />
           <NavOption
             destinationUrl="/random-flavors"
             destinationPage="Generate Random Flavors"
-            currentPageUrl={page}
-            setPage={getNavOptionPage}
+            currentPagePath={currentPagePath}
+            setCurrentPagePath={setCurrentPagePath}
           />
         </ul>
       </nav>
@@ -45,34 +42,15 @@ export default function IceCreamHeader() {
 interface NavOptionProps {
   destinationUrl: string;
   destinationPage: string;
-  currentPageUrl: string;
-  setPage(pageUrl: string): void;
+  currentPagePath: string;
+  setCurrentPagePath(pageUrl: string): void;
 }
 
 function NavOption(props: NavOptionProps) {
-  let linkStyle: string = "";
-  let currentPageIndicator: string = "";
-  let destinationUrl: string = props.destinationUrl;
-
-  if (destinationUrl == props.currentPageUrl) {
-    linkStyle = styles["disabled"];
-    currentPageIndicator = "*";
-  }
-
-  const handleClick = useCallback(() => {
-    props.setPage(destinationUrl);
-  }, [props.setPage]);
-
   return (
     <li className={styles["nav-item"]}>
-      <a
-        href={props.destinationUrl}
-        className={linkStyle}
-        onClick={handleClick}
-      >
-        {currentPageIndicator}
-        {props.destinationPage}
-      </a>
+      <Link to={props.destinationUrl} onClick={() => props.setCurrentPagePath(props.destinationUrl)}>{props.currentPagePath === props.destinationUrl ? "*" : ""} 
+        {props.destinationPage}</Link>
     </li>
   );
 }
