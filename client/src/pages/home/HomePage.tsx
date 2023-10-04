@@ -35,7 +35,6 @@ export default function HomePage() {
   }, []);
 
   async function handleRegenerateClick() {
-    console.log("clicked");
     setNewFlavor((await makePhrases(1)).pop());
   }
 
