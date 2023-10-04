@@ -4,14 +4,18 @@ import { PORT } from './utils/config';
 import icecreamRouter from './controllers/icecreams';
 import userRouter from './controllers/users';
 import orderItemRouter from './controllers/orderitems';
+import phraseRouter from './controllers/phrases';
 import toppingRouter from './controllers/toppings';
+import orderRouter from "./controllers/orders";
 
 const app: Express = express();
 const port = PORT;
 
 app.use('/api/icecreams', icecreamRouter);
 app.use('/api/users', userRouter);
+app.use("/api/orders", orderRouter);
 app.use('/api/orderitems', orderItemRouter)
+app.use('/api/words', phraseRouter)
 app.use('/api/toppings', toppingRouter);
 
 const start = async () => {
@@ -26,4 +30,3 @@ const start = async () => {
 };
 
 start();
-
