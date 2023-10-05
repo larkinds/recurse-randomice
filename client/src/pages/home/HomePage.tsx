@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import FlavorThumbnail, { Flavor } from "../../components/FlavorThumbnail";
 import iceCreamService from "../../services/icecreams";
-// import styles from "./home.module.css";
 
 const makePhrases = async (len: number) => {
   const userFlavors: Flavor[] = new Array<Flavor>();
@@ -27,7 +26,7 @@ export default function HomePage() {
   const generateFlavors = async () => {
     setGeneratedFlavors(await iceCreamService.getFive());
     setUserFlavors(await makePhrases(5));
-    setNewFlavor((await makePhrases(1)).pop());
+    // setNewFlavor((await makePhrases(1)).pop());
   };
 
   useEffect(() => {
@@ -39,37 +38,66 @@ export default function HomePage() {
   }
 
   return (
-    <>
-    <div className="relative isolate px-6 pt-14 lg:px-8">
-    <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-      <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" ></div>
-    </div>
-    </div>
-    <div className="mx-auto max-w-2xl lg:text-center">
-      <h2 className="text-base font-semibold leading-7 text-indigo-600">Ice cream store</h2>
-      <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Randomice</h1>
-      <p className="mt-6 text-lg leading-8 text-gray-600">Enjoy the taste of our randomly generated silly flavors!</p>
-    </div>
-      {newFlavor && (
-        <div>
-          <button onClick={handleRegenerateClick}>Regenerate</button>
-          <FlavorThumbnail flavor={newFlavor} />
+    <div className="relative bg-white">
+      <div className="absolute inset-x-0 -top-0 -z-10 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#fcd1e2] to-[#b0abf4] ">
+      <div className="mx-auto max-w-2xl lg:text-center">
+        <h2 className="text-base font-semibold leading-7 text-indigo-600">
+          Ice Cream Store
+        </h2>
+        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+          Randomice
+        </h1>
+        <p className="mt-6 text-lg leading-8 text-gray-600">
+          Enjoy the taste of our randomly generated silly flavors!
+        </p>
+      </div>
+
+      <div className="mx-auto mt-16 max-w-xl sm:mt-20">
+      <p className="text-center block text-sm font-semibold leading-6 text-gray-900">You're about to create a never-before-seen flavor</p>
+      <div className="grid grid-cols-1 gap-x-16 gap-y-6 sm:grid-cols-2">
+        <div className="mt-2.5">
+          <input type="text" placeholder="adjective" readOnly value={newFlavor?.name.split(" ")[0]}
+          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
         </div>
-      )}
+        <div className="mt-2.5">
+          <input type="text" placeholder="noun" readOnly value={newFlavor?.name.split(" ")[1]}
+          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+        </div>
+      </div>
+
+        <div className="flex justify-center mt-5 mb-20">
+          {newFlavor ? 
+          <div> 
+            <button
+            className="block w-60 mb-3 rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" 
+            onClick={handleRegenerateClick}>Discover a different ice-cream</button>
+            <button
+            className="block w-60 rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" 
+            >Save Flavor & Add to cart🍨</button>
+          </div>
+          : <button
+          className="block w-60 rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" 
+          onClick={handleRegenerateClick}>I'm feeling lucky✨</button>
+          }
+        </div>
+      </div>
+
       <div className="flex justify-center flex-wrap max-w-xl gap-x-5 gap-y-10 lg:max-w-none lg:gap-x-10 lg:gap-y-50 lg:m-10">
         {generatedFlavors.map((flavor) => (
+          <div className="bg-white">
           <FlavorThumbnail key={flavor.name} flavor={flavor} />
+          </div>
         ))}
       </div>
 
       <div className="flex justify-center flex-wrap max-w-xl gap-x-5 gap-y-10 lg:max-w-none lg:gap-x-10 lg:gap-y-50 lg:m-10">
         {userFlavors.map((flavor) => (
+          <div className="bg-white">
           <FlavorThumbnail key={flavor.name} flavor={flavor} />
+          </div>
         ))}
       </div>
-      <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
-      <div className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(10%+36rem)] sm:w-[72.1875rem]" ></div>
+    </div> 
     </div>
-    </>
   );
 }
