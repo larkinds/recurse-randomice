@@ -13,11 +13,10 @@ export default function App() {
  
   return (
     <LocalStorageContext.Provider value={storage}>
-    <HomePage />
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<div>Temp</div>}  />
+          <Route path="/" element={<HomePage />}  />
           <Route path="hall-of-fame" element={<HallOfFame/>}/>
           <Route path="*" element={<ErrorPage />} />
         </Routes>
