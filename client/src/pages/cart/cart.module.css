@@ -14,15 +14,12 @@
 }
 
 .cartBtn {
-  position: absolute;
-  top: 0;
-  right: 10px;
+  position: inherit;
   background: transparent;
   border: none;
   font-size: 2rem;
   cursor: pointer;
   outline: none;
-  padding: 0.5rem;
 }
 
 .cartBtn:hover {
