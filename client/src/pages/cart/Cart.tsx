@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Modal } from "../../components";
 import styles from "./cart.module.css";
+import { LocalStorageContext } from "../../context/DataContext";
 
 type Item = {
   id: number;
@@ -43,6 +44,8 @@ type CartProps = {
 };
 
 export default function Cart({ isOpen, onClose }: CartProps) {
+  const localStorageStuff = useContext(LocalStorageContext);
+  console.log(localStorageStuff.storage)
   const [items, setItems] = useState(itemList);
 
   function handleDeleteItem(id: Item["id"]) {

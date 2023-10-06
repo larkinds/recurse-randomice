@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { Dispatch, createContext } from "react";
 import { Cart, StorageData } from "../utils/Types";
 
 const cart: Cart = {
@@ -10,6 +10,13 @@ const fakeCart: StorageData = {
     user: "",
     cart
 }
+interface Test {
+    storage: StorageData | null,
+    setStorage?: Dispatch<React.SetStateAction<StorageData>> 
+}
 
-export const LocalStorageContext = createContext<StorageData | null>(fakeCart)
+const fakeTest: Test = {
+    storage: fakeCart,
+}
 
+export const LocalStorageContext = createContext<Test>(fakeTest)

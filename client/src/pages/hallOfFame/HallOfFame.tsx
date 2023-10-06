@@ -2,7 +2,7 @@ import FlavorThumbnail, { Flavor } from "../../components/FlavorThumbnail";
 import styles from "./hall-of-fame.module.css";
 
 const flavors: Flavor[] = Array.from({ length: 22 }, () => ({
-  name: "Vanilla",
+  name: "Reluctant Lemon",
   price: 0,
   image: "/strawberry-icecream.jpg",
 }));

@@ -10,7 +10,7 @@ export default function App() {
   const [storage, setStorage] = useSetLocalStorage(null, "Test");
  
   return (
-    <LocalStorageContext.Provider value={storage}>
+    <LocalStorageContext.Provider value={{storage, setStorage}}>
     <BrowserRouter>
       <Layout>
         <Routes>

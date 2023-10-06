@@ -10,7 +10,7 @@ export interface IceCream {
 
 export interface Cart {
     iceCream: IceCream[],
-    toppings: Topping[]
+    toppings?: Topping[]
 }
 
 export interface StorageData {
