@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import styles from "./checkout.module.css";
 import CheckOutTotal from "../../components/CheckOutTotal";
@@ -10,7 +9,6 @@ function CartItem({ children }: { children: React.ReactNode }) {
 
 function ItemDetails({ item }: { item: Item }) {
   return (
-
     <div className={styles.details}>
       <div className={styles.flavor}>
         <img src={item.image} alt={item.flavor} />
@@ -64,7 +62,7 @@ export default function CheckoutPage() {
       {items.map((item) => (
         <CartItem key={item.id}>
           <p>{item.quantity} x</p>
-          <ItemDetails item={item}/>
+          <ItemDetails item={item} />
         </CartItem>
       ))}
       <CheckOutTotal />

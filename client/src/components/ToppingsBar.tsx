@@ -4,10 +4,9 @@ import ToppingsCarousel from "./ToppingsCarousel";
 import "./ToppingsBar.css";
 
 function ToppingsBar() {
-
   return (
     <>
-      <div className='toppingbar-title'>
+      <div className="toppingbar-title">
         <strong>toppings</strong>
         <ToppingsCarousel />
       </div>
