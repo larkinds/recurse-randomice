@@ -17,7 +17,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<div>Temp</div>} />
             <Route path="hall-of-fame" element={<HallOfFame />} />
-            <Route path="flavor/*" element={<FlavorPage />} />
+            <Route path="flavor/:flavor" element={<FlavorPage />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </Layout>
