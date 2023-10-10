@@ -1,41 +1,125 @@
+// import { useCartContext } from "../context/CartContext";
+// import "./productcard.css";
+// import {  addIceCream, incrementIceCream, decrementIceCream, removeIceCream, setCart } from "../utils/DispatchUtils";
+// import { StorageData } from "../utils/Types";
+// import { useUserContext } from "../context/UserContext";
 
-
-// import useSetLocalStorage from "../../hooks/UseLocalStorage";
-// import { LocalStorageContext } from "../../context/DataContext";
-// import { StorageData } from "../../utils/Types";
-// import ProductCard from "../../components/ProductCard";
-
-
+// type ProductCardProps = {
+//   name: string;
+//   description: string;
+//   image: string;
+//   creator: string;
+//   purchaseHistory: number;
+// };
 
 // const fakeUser: StorageData = {
 //   user: "Larkin",
+//   cart: {
+//     iceCream: [{
+//       id: "1",
+//       iceCreamName: "relucantant lemon",
+//       quantity: 3
+//     }],
+//     toppings: [{
+//       id: "2",
+//       isAdded: false
+//     }]
+//   }
 // };
 
 // const fakeUserTwo: StorageData = {
 //   user: "Josh",
 //   cart: {
-//     iceCream: [{
-//       name: "strawberry shortcake",
+//     iceCream: [
+//       {
+//       id: "5",
+//       iceCreamName: "strawberry shortcake",
 //       quantity: 5
-//     }],
+//     },
+//     {
+//       id: "6",
+//       iceCreamName: "chocolate paradise",
+//       quantity: 3
+//     }
+//   ],
 //     toppings: [{
-//       name: "sprinkles",
-//       quantity: 1
+//       id: "7",
+//       isAdded: false
 //     }]
 //   }
 // };
 
-// export default function Example() {
-//   const [storage, setStorage] = useSetLocalStorage(localStorageCopy, "Test");
+// export default function ProductCard( props : ProductCardProps) {
+//   const { state, dispatch } = useCartContext();
+//   const { user, setUser } = useUserContext();
+
+//   const handleSetUserAndCart = (userData: StorageData) => {
+//     if (userData.cart && userData.user) {
+//       dispatch(setCart(userData.cart));
+//       setUser(userData.user)
+//     }
+//   };
 
 //   return (
-//     <LocalStorageContext.Provider >
-//       <div>
-//         <button onClick={() => setStorage(fakeUser)}>1</button>
-//         <button onClick={() => setStorage(fakeUserTwo)}>2</button>
-//         <p>{storage?.user}</p>
+//     <>
+//     <div>
+//     <button onClick={() => handleSetUserAndCart(fakeUser)}>1</button>
+//     <button onClick={() => handleSetUserAndCart(fakeUserTwo)}>2</button>
+//     <p>{user}</p>
+//     </div>
+//     <div className="single-product-grid">
+//       <div className="left">
+//         <p>
+//           <strong>revolutionary offer:</strong> $0
+//         </p>
+//         <p>{user}</p>
+//         <img src={props.image} style={{ width: "250px", height: "250px" }} />
+        
+//         {state.iceCream.map((iceCreamOrderGroup) => (
+//         <div key={iceCreamOrderGroup.id}>
+//           <button onClick={() => dispatch(incrementIceCream(iceCreamOrderGroup.id))}>
+//             +
+//           </button>
+
+//           <p>{iceCreamOrderGroup.quantity}</p>
+
+//           <button onClick={() => dispatch(decrementIceCream(iceCreamOrderGroup.id))}>
+//             -
+//           </button>
+
+//           <button onClick={() => dispatch(removeIceCream(iceCreamOrderGroup.id))}>
+//             Remove
+//           </button>
+
+//           <button onClick={() => dispatch(addIceCream("new ice"))}>
+//             Add
+//           </button>
+//         </div>
+//         ))}
+//       </div> 
+//       <div
+//         className="center"
+//         style={{
+//           borderLeft: "2px solid black",
+//           height: "80%",
+//           marginTop: "auto",
+//           marginBottom: "auto",
+//         }}
+//       ></div>
+//       <div className="right">
+//         <h2>flavour: {props.name}</h2>
+//         <p>
+//           <strong>description</strong>: <span>{props.description}</span>
+//         </p>
+//         <p>
+//           <strong>Creator:</strong> {props.creator}
+//         </p>
+//         <p>
+//           <strong>Times Purchased:</strong> {props.purchaseHistory}
+//         </p>
 //       </div>
-//       <ProductCard name={""} description={""} image={""} creator={""} purchaseHistory={0} />
-//     </LocalStorageContext.Provider>
+//     </div>
+//     </>
 //   );
 // }
+// <ProductCard name={""} description={""} image={""} creator={""} purchaseHistory={0} />
