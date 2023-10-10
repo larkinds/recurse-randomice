@@ -1,41 +1,69 @@
-import { useState, useEffect, Dispatch,SetStateAction } from "react";
-import { Cart, StorageData } from "../utils/Types";
-import { fetchAllItemsFromLocalStorage } from "../utils/LocalStorageUtils";
+import {
+  Dispatch,
+  Reducer,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from "react";
 
-//to import these functions, destructure the function that you'd like to use. This hook should only be called at the top level, and then the destructured parts passed down as needed.
-//const [value, setStorage] = useSetLocalStorage(localStorageCopy, "Test");
+export default function useLocalStorageWithReducer<T, A>(
+  key: string,
+  initialState: T,
+  reducer: Reducer<T, A>,
+  setterFunction: Function,
+): { state: T; dispatch: Dispatch<A> } {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-//always pass in the FULL cart or user object that you want to use, with the previous values. This is necessary because setting an new key value pair in localStorage *overwrites* anything that already existed at that key
-type LocalStorageType = [
-    storageData: StorageData | {user: string | null, cart: Cart | null},
-    dispatch: Dispatch<SetStateAction<StorageData>> 
-]
+  const contextValue = useMemo(() => {
+    return { state, dispatch };
+  }, [state, dispatch]);
 
-export default function useSetLocalStorage(storageItem: StorageData | null, fallbackState: string): LocalStorageType {
-    const localStorageCopy: StorageData | null = fetchAllItemsFromLocalStorage()
-    
-    const [storage, setStorage] = useState<StorageData>(storageItem || localStorageCopy || fallbackState);
+  useEffect(() => {
+    const item = localStorage.getItem(key);
+    try {
+      const parsed = item ? (JSON.parse(item) as T) : initialState;
+      dispatch(setterFunction(parsed));
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
-    useEffect(() => {
-        let key: string;
-        if (storage.cart && storage.user) {
-            key = "both";
-        } else if (storage.cart) {
-            key = "cart"
-        } else if (storage.user) {
-            key = "user"
-        }
+  useEffect(() => {
+    const item = localStorage.getItem(key);
+    const parsed = item ? JSON.parse(item) : initialState;
+    if (parsed != state && state != initialState) {
+      localStorage.setItem(key, JSON.stringify(state));
+    }
+  }, [state, dispatch]);
 
-        if (storage !== fallbackState && key === "both") {
-            localStorage.setItem("cart", JSON.stringify(storage.cart));
-            localStorage.setItem("user", JSON.stringify(storage.user));
-        } else if (storage !== fallbackState && key === "user") {
-            localStorage.setItem("user", JSON.stringify(storage.user));
-        } else if (storage !== fallbackState && key === "cart") {
-            localStorage.setItem("cart", JSON.stringify(storage.cart));
-        }
-        
-    }, [storage, setStorage, fallbackState])
+  return contextValue;
+}
 
-    return [storage, setStorage];
+export function useLocalStorageWithState<T>(key: string, initialState: T) {
+  const [value, setValue] = useState<T>(initialState);
+
+  const contextValue = useMemo(() => {
+    return { value, setValue };
+  }, [value, setValue]);
+
+  useEffect(() => {
+    const item = localStorage.getItem(key);
+    try {
+      const parsed = item ? (JSON.parse(item) as T) : initialState;
+      setValue(parsed);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    const item = localStorage.getItem(key);
+    const parsed = item ? JSON.parse(item) : initialState;
+    if (parsed != value && value != initialState) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+  }, [value, setValue]);
+
+  return contextValue;
 }
