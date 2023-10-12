@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
+import { LocalStorageContext } from "../../context/DataContext";
 import { Button, Modal } from "../../components";
 import styles from "./cart.module.css";
-import { LocalStorageContext } from "../../context/DataContext";
+import { IceCreamOrderGroup, AddIceCreamOrderGroupAction, IceCreamOrderGroupAction } from "../../reducers/iceCreamReducer";
+
 
 type Item = {
-  id: number;
+  id: string;
   image: string;
   flavor: string;
   price: number;
@@ -41,11 +43,14 @@ const itemList: Item[] = [
 type CartProps = {
   isOpen: boolean;
   onClose: () => void;
+  cartState: IceCreamOrderGroup[];
+  dispatchCart: React.Dispatch<AddIceCreamOrderGroupAction | IceCreamOrderGroupAction>;
 };
 
-export default function Cart({ isOpen, onClose }: CartProps) {
+export default function Cart({ isOpen, onClose, cartState, dispatchCart }: CartProps) {
   const localStorageStuff = useContext(LocalStorageContext);
-  console.log(localStorageStuff.storage)
+  console.log({cartState})
+  console.log({dispatchCart})
   const [items, setItems] = useState(itemList);
 
   function handleDeleteItem(id: Item["id"]) {
@@ -61,6 +66,7 @@ export default function Cart({ isOpen, onClose }: CartProps) {
     });
 
     setItems(updatedItems);
+    // dispatch()
   }
 
   return (
@@ -71,7 +77,9 @@ export default function Cart({ isOpen, onClose }: CartProps) {
       buttonClassNames={styles.modalCloseBtn}
     >
       {/* Currently getting data from a constant but will eventually either need to make this dynamic */}
-      {items.map((item) => (
+
+
+      {cartState.map((item) => (
         <CartItem key={item.id}>
           <ItemDetails item={item} />
           <div className={styles.actionBtns}>
@@ -102,14 +110,14 @@ function RemoveBtn({
   );
 }
 
-function ItemDetails({ item }: { item: Item }) {
+function ItemDetails({ item }: { item: IceCreamOrderGroup }) {
   return (
     <div className={styles.details}>
       <div className={styles.flavor}>
-        <img src={item.image} alt={item.flavor} />
-        <span> {item.flavor} </span>
+        <img src={item.image} alt={item.iceCreamName} />
+        <span> {item.iceCreamName} </span>
       </div>
-      <p> ${item.price} </p>
+      <p> $0 </p>
     </div>
   );
 }
@@ -118,7 +126,7 @@ function Quantity({
   item,
   onUpdate,
 }: {
-  item: Item;
+  item: iceCreamName;
   onUpdate: (id: Item["id"], newQuantity: Item["quantity"]) => void;
 }) {
   function handleIncrement() {

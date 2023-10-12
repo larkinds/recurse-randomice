@@ -1,7 +1,7 @@
-import { StorageData } from "./Types";
+import { Cart, StorageData } from "./Types";
 
  //function to get a specific item from localStorage
- export function fetchItemFromLocalStorage(storageItem: string): string | null {
+ export function fetchItemFromLocalStorage(storageItem: string): Cart | string | null {
     return JSON.parse(localStorage.getItem(storageItem) || "{}")
 }
 

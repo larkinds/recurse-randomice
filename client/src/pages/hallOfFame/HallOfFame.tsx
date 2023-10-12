@@ -1,4 +1,5 @@
 import FlavorThumbnail, { Flavor } from "../../components/FlavorThumbnail";
+import { AddIceCreamOrderGroupAction, IceCreamOrderGroupAction } from "../../reducers/iceCreamReducer";
 import styles from "./hall-of-fame.module.css";
 
 const flavors: Flavor[] = Array.from({ length: 22 }, () => ({
@@ -7,11 +8,15 @@ const flavors: Flavor[] = Array.from({ length: 22 }, () => ({
   image: "/strawberry-icecream.jpg",
 }));
 
-export default function HallOfFame() {
+type HallOfFameProps = {
+  dispatchCart: React.Dispatch<AddIceCreamOrderGroupAction | IceCreamOrderGroupAction>;
+};
+
+export default function HallOfFame({dispatchCart}: HallOfFameProps) {
   return (
     <div className={styles.container}>
-      {flavors.map((flavor) => (
-        <FlavorThumbnail key={flavor.name} flavor={flavor} />
+      {flavors.map((flavor, i) => (
+        <FlavorThumbnail key={flavor.name + i} flavor={flavor}  dispatchCart={dispatchCart} />
       ))}
     </div>
   );

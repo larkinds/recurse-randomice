@@ -2,12 +2,16 @@ export type IceCreamOrderGroup = {
   id: string;
   quantity: number;
   iceCreamName: string;
+  image: string;
 };
+
+
 
 export type AddIceCreamOrderGroupAction = {
   type: "add";
   id: string;
   iceCreamName: string;
+  image: string;
 };
 
 export type IceCreamOrderGroupAction = {
@@ -27,6 +31,7 @@ export default function iceCreamOrderGroupReducer(
           id: action.id,
           quantity: 1,
           iceCreamName: action.iceCreamName,
+          image: action.image
         },
       ];
     }

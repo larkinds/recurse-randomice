@@ -3,9 +3,15 @@ import { Link } from "react-router-dom";
 import IceCreamLogo from "./IceCreamLogo";
 import CartPage from "../pages/cart/CartPage";
 import styles from "./header.module.css";
+import { IceCreamOrderGroup, AddIceCreamOrderGroupAction, IceCreamOrderGroupAction } from "../reducers/iceCreamReducer";
 
 
-export default function IceCreamHeader() {
+type HeaderProps = {
+  cartState: IceCreamOrderGroup[];
+  dispatchCart: React.Dispatch<AddIceCreamOrderGroupAction | IceCreamOrderGroupAction>;
+};
+
+export default function IceCreamHeader({cartState, dispatchCart}: HeaderProps) {
   const [currentPagePath, setCurrentPagePath] = useState<string>("/");
   
   function handleSetStarPage(path: string) {
@@ -33,7 +39,7 @@ export default function IceCreamHeader() {
       </nav>
       <div className={styles["header-end"]}>
         <button className={styles["login-button"]}>login/logout</button>
-        <CartPage />
+        <CartPage cartState={cartState} dispatchCart={dispatchCart}/>
       </div>
     </header>
   );

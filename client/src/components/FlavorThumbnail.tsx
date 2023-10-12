@@ -1,7 +1,9 @@
 import { useContext } from "react";
+import { v4 as uuid } from "uuid";
 import { LocalStorageContext } from "../context/DataContext";
 import styles from "./flavor-thumbnail.module.css";
 import { IceCream } from "../utils/Types";
+import { AddIceCreamOrderGroupAction, IceCreamOrderGroupAction } from "../reducers/iceCreamReducer";
 
 export type Flavor = {
   name: string;
@@ -9,28 +11,28 @@ export type Flavor = {
   image: string;
 };
 
-export default function FlavorThumbnail({ flavor }: { flavor: Flavor }) {
+export default function FlavorThumbnail({ flavor, dispatchCart }: { flavor: Flavor, dispatchCart: React.Dispatch<AddIceCreamOrderGroupAction | IceCreamOrderGroupAction> }) {
   const localStorageHook = useContext(LocalStorageContext);
 
-  //to do: refactor so this sets the data in the reducer too
-
   function handleAddToCart() {
-    let alreadyInCart: boolean = false;
+    if (!checkIceCreamIsInCart()) {
+      addToLocalStorage();
+      const id: string = uuid();
+      dispatchCart({type: "add", id, iceCreamName: flavor.name, image: flavor.image})
+    }
+    
+  }
 
+  function addToLocalStorage() {
     const user = localStorageHook.storage?.user;
     let cart = localStorageHook.storage?.cart;
-
-    cart?.iceCream.forEach((iceCream: IceCream) => {
-      if (iceCream.name === flavor.name) {
-        iceCream.quantity++;
-        alreadyInCart = true;
-      }
-    });
+    const alreadyInCart: boolean = checkIceCreamIsInCart();
+    
 
     if (!alreadyInCart && cart?.iceCream) {
-      cart.iceCream.push({ name: flavor.name, quantity: 1 });
+      cart.iceCream.push({ name: flavor.name, quantity: 1, image: flavor.image });
     } else if (!cart?.iceCream) {
-      cart = { iceCream: [{ name: flavor.name, quantity: 1 }] };
+      cart = { iceCream: [{ name: flavor.name, quantity: 1, image: flavor.image }] };
     }
 
     if (user && localStorageHook.setStorage) {
@@ -38,6 +40,17 @@ export default function FlavorThumbnail({ flavor }: { flavor: Flavor }) {
     } else if (localStorageHook.setStorage) {
       localStorageHook.setStorage({ cart });
     }
+  }
+
+  function checkIceCreamIsInCart(): boolean {
+    let alreadyInCart: boolean = false;
+    localStorageHook.storage?.cart?.iceCream.forEach((iceCream: IceCream) => {
+      if (iceCream.name === flavor.name) {
+        iceCream.quantity++;
+        alreadyInCart = true;
+      }
+    });
+    return alreadyInCart;
   }
 
   return (

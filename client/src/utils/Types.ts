@@ -5,7 +5,8 @@ export interface Topping {
 
 export interface IceCream {
     name: string,
-    quantity: number
+    quantity: number,
+    image: string
 }
 
 export interface Cart {

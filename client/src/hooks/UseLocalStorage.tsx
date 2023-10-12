@@ -5,7 +5,7 @@ import { fetchAllItemsFromLocalStorage } from "../utils/LocalStorageUtils";
 //to import these functions, destructure the function that you'd like to use. This hook should only be called at the top level, and then the destructured parts passed down as needed.
 //const [value, setStorage] = useSetLocalStorage(localStorageCopy, "Test");
 
-//always pass in the FULL cart or user object that you want to use, with the previous values. This is necessary because setting an new key value pair in localStorage *overwrites* anything that already existed at that key
+//always pass in the FULL cart or user object that you want to use, with the previous values. This is necessary because setting a new key value pair in localStorage *overwrites* anything that already existed at that key
 type LocalStorageType = [
     storageData: StorageData | {user: string | null, cart: Cart | null},
     dispatch: Dispatch<SetStateAction<StorageData>> 
@@ -24,6 +24,8 @@ export default function useSetLocalStorage(storageItem: StorageData | null, fall
             key = "cart"
         } else if (storage.user) {
             key = "user"
+        } else {
+            key = ""
         }
 
         if (storage !== fallbackState && key === "both") {
