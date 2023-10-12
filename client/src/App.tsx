@@ -15,7 +15,7 @@ import { Cart } from "./utils/Types";
 export default function App() {
   const initialReducerData: IceCreamOrderGroup[] = getInitialReducerData();
   const [cartState, dispatchCart] = useReducer(iceCreamOrderGroupReducer, initialReducerData)
-  const [storage, setStorage] = useSetLocalStorage(null, "Test");
+  const [storage, setStorage] = useSetLocalStorage(null);
 
  
   return (

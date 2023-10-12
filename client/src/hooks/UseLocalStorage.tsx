@@ -11,10 +11,13 @@ type LocalStorageType = [
     dispatch: Dispatch<SetStateAction<StorageData>> 
 ]
 
-export default function useSetLocalStorage(storageItem: StorageData | null, fallbackState: string): LocalStorageType {
-    const localStorageCopy: StorageData | null = fetchAllItemsFromLocalStorage()
+const emptyStorageData: StorageData = {}
+
+
+export default function useSetLocalStorage(storageItem: StorageData | null): LocalStorageType {
+    const localStorageCopy: StorageData | null  = fetchAllItemsFromLocalStorage()
     
-    const [storage, setStorage] = useState<StorageData>(storageItem || localStorageCopy || fallbackState);
+    const [storage, setStorage] = useState<StorageData>(storageItem || localStorageCopy || emptyStorageData);
 
     useEffect(() => {
         let key: string;
@@ -28,16 +31,16 @@ export default function useSetLocalStorage(storageItem: StorageData | null, fall
             key = ""
         }
 
-        if (storage !== fallbackState && key === "both") {
+        if (storage !== emptyStorageData && key === "both") {
             localStorage.setItem("cart", JSON.stringify(storage.cart));
             localStorage.setItem("user", JSON.stringify(storage.user));
-        } else if (storage !== fallbackState && key === "user") {
+        } else if (storage !== emptyStorageData && key === "user") {
             localStorage.setItem("user", JSON.stringify(storage.user));
-        } else if (storage !== fallbackState && key === "cart") {
+        } else if (storage !== emptyStorageData && key === "cart") {
             localStorage.setItem("cart", JSON.stringify(storage.cart));
         }
         
-    }, [storage, setStorage, fallbackState])
+    }, [storage, setStorage])
 
     return [storage, setStorage];
 }
