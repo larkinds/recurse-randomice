@@ -10,29 +10,6 @@ import iceCreamOrderGroupReducer, { IceCreamOrderGroup } from "./reducers/iceCre
 import { fetchItemFromLocalStorage } from "./utils/LocalStorageUtils";
 import { Cart } from "./utils/Types";
 
-
-//todo: replace temp with homepage
-export default function App() {
-  const initialReducerData: IceCreamOrderGroup[] = getInitialReducerData();
-  const [cartState, dispatchCart] = useReducer(iceCreamOrderGroupReducer, initialReducerData)
-  const [storage, setStorage] = useSetLocalStorage(null);
-
- 
-  return (
-    <LocalStorageContext.Provider value={{storage, setStorage}}>
-    <BrowserRouter>
-      <Layout cartState={cartState} dispatchCart={dispatchCart}> 
-        <Routes>
-          <Route path="/" element={<div>Temp</div>}  />
-          <Route path="hall-of-fame" element={<HallOfFame dispatchCart={dispatchCart} />}/>
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </Layout>
-    </BrowserRouter>
-    </LocalStorageContext.Provider>
-  )
-}
-
 function getInitialReducerData(): IceCreamOrderGroup[]  {
   const cart: Cart | string | null = fetchItemFromLocalStorage("cart");
 
@@ -53,3 +30,24 @@ function getInitialReducerData(): IceCreamOrderGroup[]  {
   return initialIceCreamOrder;
 }
 
+
+//todo: replace temp with homepage
+export default function App() {
+  const initialReducerData: IceCreamOrderGroup[] = getInitialReducerData();
+  const [cartState, dispatchCart] = useReducer(iceCreamOrderGroupReducer, initialReducerData)
+  const [storage, setStorage] = useSetLocalStorage(null);
+ 
+  return (
+    <LocalStorageContext.Provider value={{storage, setStorage}}>
+    <BrowserRouter>
+      <Layout cartState={cartState} dispatchCart={dispatchCart}> 
+        <Routes>
+          <Route path="/" element={<div>Temp</div>}  />
+          <Route path="hall-of-fame" element={<HallOfFame dispatchCart={dispatchCart} />}/>
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
+    </LocalStorageContext.Provider>
+  )
+}

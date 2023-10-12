@@ -1,9 +1,13 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { LocalStorageContext } from "../../context/DataContext";
 import { Button, Modal } from "../../components";
 import styles from "./cart.module.css";
-import { IceCreamOrderGroup, AddIceCreamOrderGroupAction, IceCreamOrderGroupAction } from "../../reducers/iceCreamReducer";
-
+import {
+  IceCreamOrderGroup,
+  AddIceCreamOrderGroupAction,
+  IceCreamOrderGroupAction,
+} from "../../reducers/iceCreamReducer";
+import { StorageData } from "../../utils/Types";
 
 type Item = {
   id: string;
@@ -13,60 +17,60 @@ type Item = {
   quantity: number;
 };
 
-const itemList: Item[] = [
-  {
-    id: 1,
-    image:
-      "https://media.istockphoto.com/id/980474978/vector/strawberry-ice-cream-cone-flat-design-dessert-icon.jpg?s=612x612&w=0&k=20&c=kY7enczOhemyXVu5Jp2pmVbv5SfQPj03zcqb27fJv4I=",
-    flavor: "strawberry",
-    price: 0,
-    quantity: 1,
-  },
-  {
-    id: 2,
-    image:
-      "https://img.freepik.com/free-vector/chocolate-ice-creame-waffle-cone-sticker_1308-68693.jpg?w=2000",
-    flavor: "chocolate",
-    price: 0,
-    quantity: 3,
-  },
-  {
-    id: 3,
-    image:
-      "https://thumbs.dreamstime.com/b/ice-cream-cone-vector-cartoon-illustration-vanilla-213405239.jpg",
-    flavor: "vanilla",
-    price: 0,
-    quantity: 2,
-  },
-];
-
 type CartProps = {
   isOpen: boolean;
   onClose: () => void;
   cartState: IceCreamOrderGroup[];
-  dispatchCart: React.Dispatch<AddIceCreamOrderGroupAction | IceCreamOrderGroupAction>;
+  dispatchCart: React.Dispatch<
+    AddIceCreamOrderGroupAction | IceCreamOrderGroupAction
+  >;
 };
 
-export default function Cart({ isOpen, onClose, cartState, dispatchCart }: CartProps) {
-  const localStorageStuff = useContext(LocalStorageContext);
-  console.log({cartState})
-  console.log({dispatchCart})
-  const [items, setItems] = useState(itemList);
+export default function Cart({
+  isOpen,
+  onClose,
+  cartState,
+  dispatchCart,
+}: CartProps) {
+  const localStorageContext = useContext(LocalStorageContext);
 
-  function handleDeleteItem(id: Item["id"]) {
-    setItems((items) => items.filter((item) => item.id !== id));
-  }
-
-  function handleUpdateQuantity(id: Item["id"], newQuantity: Item["quantity"]) {
-    const updatedItems = items.map((item) => {
-      if (item.id === id) {
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
+  function handleDeleteItem(iceCreamItem: IceCreamOrderGroup) {
+    dispatchCart({
+      type: "delete",
+      id: iceCreamItem.id,
     });
 
-    setItems(updatedItems);
-    // dispatch()
+    //the rest of this function should be replaced by the method from the localStorage hook that deletes items from localStorage.
+    //This is just a temporary work around
+    const cartIceCream = localStorageContext.storage?.cart?.iceCream.filter(
+      (iceCream) => {
+        iceCream.name !== iceCreamItem.iceCreamName;
+      },
+    );
+
+    const newStorage: StorageData = {
+      user: localStorageContext.storage?.user,
+      cart: {
+        iceCream: cartIceCream || [],
+        toppings: localStorageContext.storage?.cart?.toppings,
+      },
+    };
+
+    localStorageContext.setStorage!(newStorage);
+  }
+
+  function handleUpdateQuantity(id: Item["id"], typeOfQuantityChange: string) {
+    if (typeOfQuantityChange == "increment") {
+      dispatchCart({
+        type: "increment",
+        id,
+      });
+    } else {
+      dispatchCart({
+        type: "decrement",
+        id,
+      });
+    }
   }
 
   return (
@@ -76,14 +80,11 @@ export default function Cart({ isOpen, onClose, cartState, dispatchCart }: CartP
       containerClassNames={styles.modal}
       buttonClassNames={styles.modalCloseBtn}
     >
-      {/* Currently getting data from a constant but will eventually either need to make this dynamic */}
-
-
       {cartState.map((item) => (
         <CartItem key={item.id}>
           <ItemDetails item={item} />
           <div className={styles.actionBtns}>
-            <RemoveBtn itemId={item.id} onDeleteItem={handleDeleteItem} />
+            <RemoveBtn iceCreamItem={item} onDeleteItem={handleDeleteItem} />
             <Quantity item={item} onUpdate={handleUpdateQuantity} />
           </div>
         </CartItem>
@@ -98,13 +99,16 @@ function CartItem({ children }: { children: React.ReactNode }) {
 
 function RemoveBtn({
   onDeleteItem,
-  itemId,
+  iceCreamItem,
 }: {
-  onDeleteItem: (id: Item["id"]) => void;
-  itemId: Item["id"];
+  onDeleteItem: (iceCreamItem: IceCreamOrderGroup) => void;
+  iceCreamItem: IceCreamOrderGroup;
 }) {
   return (
-    <Button className={styles.removeBtn} action={() => onDeleteItem(itemId)}>
+    <Button
+      className={styles.removeBtn}
+      action={() => onDeleteItem(iceCreamItem)}
+    >
       Remove
     </Button>
   );
@@ -126,16 +130,16 @@ function Quantity({
   item,
   onUpdate,
 }: {
-  item: iceCreamName;
-  onUpdate: (id: Item["id"], newQuantity: Item["quantity"]) => void;
+  item: IceCreamOrderGroup;
+  onUpdate: (id: Item["id"], typeOfQuantityChange: string) => void;
 }) {
   function handleIncrement() {
-    onUpdate(item.id, item.quantity + 1);
+    onUpdate(item.id, "increment");
   }
 
   function handleDecrement() {
     if (item.quantity > 0) {
-      onUpdate(item.id, item.quantity - 1);
+      onUpdate(item.id, "decrement");
     }
   }
 

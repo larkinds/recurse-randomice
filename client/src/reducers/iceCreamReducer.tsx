@@ -6,7 +6,6 @@ export type IceCreamOrderGroup = {
 };
 
 
-
 export type AddIceCreamOrderGroupAction = {
   type: "add";
   id: string;

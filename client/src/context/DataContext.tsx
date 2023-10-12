@@ -10,13 +10,14 @@ const fakeCart: StorageData = {
     user: "",
     cart
 }
-interface Test {
+
+export interface StorageContext {
     storage: StorageData | null,
     setStorage?: Dispatch<React.SetStateAction<StorageData>> 
 }
 
-const fakeTest: Test = {
+const fakeTest: StorageContext = {
     storage: fakeCart,
 }
 
-export const LocalStorageContext = createContext<Test>(fakeTest)
+export const LocalStorageContext = createContext<StorageContext>(fakeTest)
