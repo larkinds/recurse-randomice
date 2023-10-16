@@ -2,14 +2,10 @@ import FlavorThumbnail, { Flavor } from "../../components/FlavorThumbnail";
 import styles from "./hall-of-fame.module.css";
 import axios from "axios";
 
-const hofFlavors = await axios
-  .get("http://localhost:3003/api/hof")
-  .then((result) => {
-    return result.data;
-  });
+const hofFlavors = await axios.get("http://localhost:3003/api/hof");
 
 const flavors: Flavor[] = [];
-hofFlavors.forEach((flavor: any) => {
+hofFlavors.data.forEach((flavor: any) => {
   console.log(flavor);
   flavors.push({
     name: flavor["name"],
