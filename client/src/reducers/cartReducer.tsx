@@ -4,6 +4,13 @@ import {
   CartAction,
 } from "../utils/Types";
 
+/**
+ * A reducer function to handle actions related to the shopping cart.
+ *
+ * @param {Cart} previousState - The previous state of the shopping cart.
+ * @param {CartAction} action - The action to perform on the shopping cart.
+ * @returns {Cart} - The new state of the shopping cart after applying the action.
+ */
 export default function CartReducer(
   previousState: Cart,
   action: CartAction,
@@ -62,6 +69,14 @@ export default function CartReducer(
   }
 }
 
+/**
+ * A helper function to update the quantity of an ice cream item in the cart.
+ *
+ * @param {Cart} prevState - The previous state of the cart.
+ * @param {CartAction} action - The action to perform.
+ * @param {number} num - The quantity to add (positive) or remove (negative).
+ * @returns {IceCreamOrderGroup[]} - The updated array of ice cream items.
+ */
 const changeQuantity = (
   prevState: Cart,
   action: CartAction,
@@ -83,6 +98,13 @@ const changeQuantity = (
   }
 };
 
+/**
+ * A helper function to remove an ice cream item from the cart.
+ *
+ * @param {Cart} prevState - The previous state of the cart.
+ * @param {CartAction} action - The action to perform.
+ * @returns {IceCreamOrderGroup[]} - The updated array of ice cream items after removal.
+ */
 const deleteIceCream = (prevState: Cart, action: CartAction) => {
   if (prevState.iceCream) {
     return prevState.iceCream.filter(
@@ -93,6 +115,14 @@ const deleteIceCream = (prevState: Cart, action: CartAction) => {
   }
 };
 
+/**
+ * A helper function to update the state of a topping item in the cart.
+ *
+ * @param {Cart} prevState - The previous state of the cart.
+ * @param {CartAction} action - The action to perform.
+ * @param {boolean} bool - A boolean indicating whether to add or remove the topping.
+ * @returns {IceCreamOrderGroup[]} - The updated array of topping items.
+ */
 const changeTopping = (
   prevState: Cart,
   action: CartAction,

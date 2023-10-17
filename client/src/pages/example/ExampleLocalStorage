@@ -49,6 +49,11 @@
 //   }
 // };
 
+// const fakeUserThree: StorageData = {
+//   user: "",
+//   cart: null
+//   }
+
 // export default function ProductCard( props : ProductCardProps) {
 //   const { state, dispatch } = useCartContext();
 //   const { user, setUser } = useUserContext();
@@ -62,9 +67,10 @@
 
 //   return (
 //     <>
-//     <div>
+//     <div style={{"margin": "50px"}}>
 //     <button onClick={() => handleSetUserAndCart(fakeUser)}>1</button>
 //     <button onClick={() => handleSetUserAndCart(fakeUserTwo)}>2</button>
+//     <button onClick={() => handleSetUserAndCart(fakeUserThree)}>3</button>
 //     <p>{user}</p>
 //     </div>
 //     <div className="single-product-grid">
