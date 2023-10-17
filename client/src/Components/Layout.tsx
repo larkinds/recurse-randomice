@@ -1,10 +1,11 @@
-//to do: replace temp header with full header, then hook up links
+import IceCreamHeader from "./Header"
+import styles from "./layout.module.css"
 
 export default function Layout(props: { children: React.ReactElement | null }) {
   return (
-    <>
-      <header>Temp</header>
+    <div className={styles.container}>
+      <IceCreamHeader />
       <main>{props.children}</main>
-    </>
+    </div>
   );
 }

@@ -1,10 +1,11 @@
-import mongoose from 'mongoose'
-import uniqueValidator from 'mongoose-unique-validator'
+import mongoose from "mongoose";
+import uniqueValidator from "mongoose-unique-validator";
 
 export interface Icecreams extends mongoose.Document {
-  name: string
-  isUserGenerated: boolean
-  userId: string
+  name: string;
+  isUserGenerated: boolean;
+  userId: string;
+  dateCreated: Date;
 }
 
 const IcecreamSchema = new mongoose.Schema<Icecreams>({
@@ -19,10 +20,15 @@ const IcecreamSchema = new mongoose.Schema<Icecreams>({
   },
   userId: {
     type: String || mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
-})
+  dateCreated: {
+    type: Date,
+    required: true
+  }
+});
 
-IcecreamSchema.plugin(uniqueValidator)
+IcecreamSchema.plugin(uniqueValidator);
 
-export default mongoose.models.Icecream || mongoose.model<Icecreams>('Icecream', IcecreamSchema)
+export default mongoose.models.Icecream ||
+  mongoose.model<Icecreams>("Icecream", IcecreamSchema);
