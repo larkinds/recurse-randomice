@@ -8,6 +8,7 @@ import phraseRouter from './controllers/phrases';
 import toppingRouter from './controllers/toppings';
 import orderRouter from "./controllers/orders";
 import hofRouter from './controllers/halloffame';
+import imageRouter from './controllers/images'
 import cors from "cors";
 
 const app: Express = express();
@@ -21,6 +22,8 @@ app.use('/api/orderitems', orderItemRouter)
 app.use('/api/words', phraseRouter)
 app.use('/api/toppings', toppingRouter);
 app.use('/api/hof', hofRouter)
+app.use('/api/image', imageRouter)
+
 
 
 const start = async () => {
