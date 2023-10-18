@@ -1,0 +1,10 @@
+.account-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.account-buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
