@@ -13,7 +13,7 @@ hofFlavors.forEach((flavor: any) => {
   flavors.push({
     name: flavor["name"],
     price: 0,
-    image: "/strawberry-icecream.jpg",
+    imageURL: flavor["imageURL"],
     quantity: flavor["quantity"],
     userGenerated: flavor["isUserGenerated"],
   });

@@ -26,17 +26,6 @@ function FlavorPage() {
   const [quantity, setQuantity] = useState(0);
   const [image, setImage] = useState("");
 
-  // useEffect(() => {
-  //   axios
-  //     .post("http://localhost:3003/api/image", {
-  //       prompt: `"${flavor}" flavored icecream`,
-  //       flavor: flavor,
-  //     })
-  //     .then((response) => {
-  //       setImage(response.data);
-  //     });
-  // }, []);
-
   useEffect(() => {
     const fetchData = async () => {
       const flavorInfo = await axios

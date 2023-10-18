@@ -5,6 +5,8 @@ export interface Icecreams extends mongoose.Document {
   name: string;
   isUserGenerated: boolean;
   userId: string;
+  dateCreated: Date;
+  imageURL: string;
 }
 
 const IcecreamSchema = new mongoose.Schema<Icecreams>({
@@ -21,6 +23,15 @@ const IcecreamSchema = new mongoose.Schema<Icecreams>({
     type: String || mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  dateCreated: {
+    type: Date,
+    required: true
+  },
+  imageURL: {
+    type: String,
+    required: true
+  }
+
 });
 
 IcecreamSchema.plugin(uniqueValidator);

@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import { storage } from '../lib/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { HF_TOKEN } from "../utils/config";
 
 const imageRouter = express.Router();
 imageRouter.use(express.json());
@@ -11,7 +12,7 @@ imageRouter.post("/", async (req: Request, res: Response) => {
               "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
               {
                 headers: {
-                  Authorization: "Bearer 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",
+                  Authorization: `Bearer ${HF_TOKEN}`,
                 },
                 method: "POST",
                 body: JSON.stringify(req.body.prompt),

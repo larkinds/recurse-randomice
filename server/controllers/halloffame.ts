@@ -22,7 +22,7 @@ hofRouter.get("/", async (request: Request, response: Response) => {
     // Create an array of Flavor Names, total times sold, and user generated boolean
     for (const orderSum of result) {
         const icecream = await Icecream.findById(orderSum['_id']);
-        allFlavors.push({'name': icecream['name'], quantity: orderSum['sum'], isUserGenerated: icecream['isUserGenerated']})
+        allFlavors.push({'name': icecream['name'], quantity: orderSum['sum'], isUserGenerated: icecream['isUserGenerated'], imageURL: icecream['imageURL']})
       }
 
     // Sort the array, and return only the 100 most commonly sold flavors
@@ -53,7 +53,7 @@ hofRouter.get("/", async (request: Request, response: Response) => {
     // Create an array of Flavor Names, total times sold, and user generated boolean
     for (const orderSum of result) {
         const icecream = await Icecream.findById(orderSum['_id']);
-        allFlavors.push({'name': icecream['name'], quantity: orderSum['sum'], isUserGenerated: icecream['isUserGenerated']})
+        allFlavors.push({'name': icecream['name'], quantity: orderSum['sum'], isUserGenerated: icecream['isUserGenerated'], imageURL: icecream['imageURL']})
       }
 
     var iceCream = allFlavors.find(x =>x.name == icecreamName);

@@ -1,5 +1,6 @@
 import { getStorage, ref } from 'firebase/storage'
 import { initializeApp } from "firebase/app";
+import { FIREBASE_KEY } from '../utils/config';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -7,7 +8,7 @@ import { initializeApp } from "firebase/app";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAltItXZX3mJNhpJnH0dIu3Lw-5QARkewc",
+  apiKey: FIREBASE_KEY,
   authDomain: "recurse-icecream.firebaseapp.com",
   projectId: "recurse-icecream",
   storageBucket: "recurse-icecream.appspot.com",
