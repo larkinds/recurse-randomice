@@ -5,15 +5,44 @@
 }
 
 .left {
-    grid-area: "left"
+    grid-area: "left";
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .center {
     grid-area: "center";
+    height: 80%;
+    border-left: 1.5px solid black;
+    margin: auto 0;
 }
 
 .right {
     grid-area: "right";
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
     text-align: left;
     overflow-wrap: break-word;
+    width: 85%;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.add-to-cart-button {
+    border: 1px solid black;
+    padding: 4px;
+}
+
+.add-to-cart-button:hover {
+    color: white;
+    background-color: black;
 }

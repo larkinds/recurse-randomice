@@ -6,6 +6,7 @@ import HallOfFame from "./pages/hallOfFame/HallOfFame";
 import ErrorPage from "./pages/error/Error";
 import useSetLocalStorage from "./hooks/UseLocalStorage";
 import { LocalStorageContext } from "./context/DataContext";
+import SingleProduct from "./pages/singleProduct/SingleProduct";
 
 //todo: replace temp with homepage
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/" element={<HomePage />}  />
           <Route path="hall-of-fame" element={<HallOfFame/>}/>
           <Route path="*" element={<ErrorPage />} />
+          <Route path="flavor/:flavorName" element={<SingleProduct />} />
         </Routes>
       </Layout>
     </BrowserRouter>

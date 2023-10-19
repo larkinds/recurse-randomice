@@ -10,25 +10,26 @@ type ProductCardProps = {
   purchaseHistory: number;
 };
 
+//todo: make the counter button a stable size
+
 export default function ProductCard(
   props
   : ProductCardProps) {
   const [scoopsCounter, setScoopsCounter] = useState<number>(0);
   const localStorage = useContext(LocalStorageContext);
-  console.log({localStorage})
+
+  console.log({props})
 
   return (
     <div className="single-product-grid">
       <div className="left">
         <p>
-          <strong>revolutionary offer:</strong> $0
+          revolutionary offer: $0
         </p>
-        <p>{localStorage?.user}</p>
-        <p>{localStorage?.cart?.iceCream[0].name}</p>
         <img src={props.image} style={{ width: "250px", height: "250px" }} />
-        <div>
-          <button>add to cart</button>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+        <div className="button-container">
+          <button className="add-to-cart-button">add to cart</button>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
             <button
               disabled={!scoopsCounter}
               onClick={() =>
@@ -37,8 +38,8 @@ export default function ProductCard(
             >
               -
             </button>
-            <p>{scoopsCounter}</p>
-            <button
+            <p style={{ border: "1px solid black", borderRadius: "50%", padding: "4px 12px" }}>{scoopsCounter}</p>
+            <button 
               disabled={scoopsCounter >= 10}
               onClick={() =>
                 setScoopsCounter((prevScoopCounter) => prevScoopCounter + 1)
@@ -49,15 +50,7 @@ export default function ProductCard(
           </div>
         </div>
       </div>
-      <div
-        className="center"
-        style={{
-          borderLeft: "2px solid black",
-          height: "80%",
-          marginTop: "auto",
-          marginBottom: "auto",
-        }}
-      ></div>
+      <div className="center"></div>
       <div className="right">
         <h2>flavour: {props.name}</h2>
         <p>
