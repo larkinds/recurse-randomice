@@ -16,9 +16,6 @@ export default function ProductCard(
   props
   : ProductCardProps) {
   const [scoopsCounter, setScoopsCounter] = useState<number>(0);
-  const localStorage = useContext(LocalStorageContext);
-
-  console.log({props})
 
   return (
     <div className="single-product-grid">
@@ -52,7 +49,7 @@ export default function ProductCard(
       </div>
       <div className="center"></div>
       <div className="right">
-        <h2>flavour: {props.name}</h2>
+        <h2 className="title">flavour: {props.name}</h2>
         <p>
           <strong>description</strong>: <span>{props.description}</span>
         </p>

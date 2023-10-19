@@ -3,3 +3,9 @@
     gap: 5rem;
     overflow: auto;
 }
+
+@media (max-width: 550px) {
+    .container {
+        gap: .5rem;
+    }
+}

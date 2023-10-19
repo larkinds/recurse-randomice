@@ -111,9 +111,11 @@ export default function HomePage() {
 
         <div className="flex justify-center flex-wrap m-10 gap-3">
           {userFlavors.map((flavor) => (
+            <Link to={`flavor/${flavor.name}`} state={{flavor: flavor}}>
             <div className="bg-white">
               <FlavorThumbnail key={flavor.name} flavor={flavor} />
             </div>
+            </Link>
           ))}
         </div>
       </div>
