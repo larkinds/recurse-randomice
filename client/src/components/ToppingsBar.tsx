@@ -6,7 +6,7 @@ function ToppingsBar() {
   return (
     <>
       <div className={styles.container}>
-        <h3>toppings bar</h3>
+        <h3 style={{fontSize: "1.5rem"}}>Toppings Bar</h3>
         <ToppingsCarousel />
       </div>
     </>
