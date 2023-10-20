@@ -17,7 +17,7 @@ function ToppingButton(props: ToppingButtonProps) {
     return (
         <div key={props.url} className={styles.container}>
                 <img className={styles['topping-img']} src={props.url} alt="" onClick={() => console.log(props.url)} />
-                <button style={{ marginTop: '0px' }} onClick={() => setSelected(!selected)}>{selected ? '✅' : '🥄'}</button>
+                <button style={{ marginTop: '0px', fontSize: "1.25rem" }} onClick={() => setSelected(!selected)}>{selected ? '✅' : '🥄'}</button>
         </div>
     );
 }

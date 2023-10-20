@@ -49,7 +49,7 @@ export default function ProductCard(
       </div>
       <div className="center"></div>
       <div className="right">
-        <h2 className="title">flavour: {props.name}</h2>
+        <h2 className="title" style={{fontSize: "2rem"}}>flavor: {props.name}</h2>
         <p>
           <strong>description</strong>: <span>{props.description}</span>
         </p>
