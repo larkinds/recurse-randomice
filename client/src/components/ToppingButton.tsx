@@ -3,11 +3,11 @@ import styles from "./topping-button.module.css"
 
 interface ToppingButtonProps {
     url: string,
-    selected: boolean
+    selected: boolean,
 }
 
 ToppingButton.defaultProps = {
-    selected: false
+    selected: false,
 }
 
 //todo: make the spoons more obviously a button, and larger
@@ -17,7 +17,7 @@ function ToppingButton(props: ToppingButtonProps) {
     return (
         <div key={props.url} className={styles.container}>
                 <img className={styles['topping-img']} src={props.url} alt="" onClick={() => console.log(props.url)} />
-                <h4 style={{ marginTop: '0px' }} onClick={() => setSelected(!selected)}>{selected ? '✅' : '🥄'}</h4>
+                <button style={{ marginTop: '0px' }} onClick={() => setSelected(!selected)}>{selected ? '✅' : '🥄'}</button>
         </div>
     );
 }
