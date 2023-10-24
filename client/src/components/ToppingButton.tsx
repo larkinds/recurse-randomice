@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import "./ToppingButton.css";
+import "./toppingbutton.css";
 
 interface ToppingButtonProps {
   url: string;

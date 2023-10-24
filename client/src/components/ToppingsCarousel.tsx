@@ -8,7 +8,7 @@ import Sprinkles from "../assets/images/toppings/sprinkles.png";
 import Caramel from "../assets/images/toppings/caramel.png";
 import Marshmallow from "../assets/images/toppings/marshmallow.png";
 
-import "./ToppingsCarousel.css";
+import "./toppingscarousel.css";
 
 const left = 0;
 const right = 180;
@@ -27,13 +27,9 @@ function ToppingsCarousel() {
     let newArr: string[] = toppingImgUrls.slice();
     if (newArr.length > 1) {
       if (direction == "left") {
-        // .shift() removes and returns the first element of the array.
-        // .push() pushes the value onto the end of the array.
         let x = newArr.shift();
         if (x) newArr.push(x);
       } else {
-        // .pop() removes and returns the last element of the array.
-        // .unshift() 'pushes' the value onto the beginning of the array.
         let x = newArr.pop();
         if (x) newArr.unshift(x);
       }

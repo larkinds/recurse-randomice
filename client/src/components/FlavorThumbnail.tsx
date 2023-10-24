@@ -13,7 +13,7 @@ export default function FlavorThumbnail({ flavor }: { flavor: Flavor }) {
         <img
           className={styles.image}
           src={flavor.image}
-          alt={`Photo of ${flavor.name}`}
+          alt={`Photo of ${flavor.name} ice cream`}
         />
         <p className={styles.text}>
           <strong>{flavor.name}</strong>
