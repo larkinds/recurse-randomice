@@ -1,6 +1,6 @@
 // import { useCartContext } from "../context/CartContext";
 // import "./productcard.css";
-// import {  addIceCream, incrementIceCream, decrementIceCream, removeIceCream, setCart } from "../utils/DispatchUtils";
+// import {  addIceCream, incrementIceCream, decrementIceCream, removeIceCream, setCart, addTopping, removeTopping } from "../utils/DispatchUtils";
 // import { StorageData } from "../utils/Types";
 // import { useUserContext } from "../context/UserContext";
 
@@ -44,7 +44,14 @@
 //   ],
 //     toppings: [{
 //       id: "7",
-//       isAdded: false
+//       isAdded: true
+//     }, {
+//       id: "9",
+//       isAdded: true
+//     },
+//     {
+//       id: "8",
+//       isAdded: true
 //     }]
 //   }
 // };
@@ -102,6 +109,20 @@
 //           </button>
 //         </div>
 //         ))}
+//         <br/>
+//         {state.toppings.map((topping) => (
+//         <div key={topping.id}>
+//           <button onClick={() => dispatch(addTopping(topping.id))}>
+//             add
+//           </button>
+
+//           <p>{topping.id}</p>
+
+//           <button onClick={() => dispatch(removeTopping(topping.id))}>
+//             remove
+//           </button>
+//         </div>
+//         ))}
 //       </div> 
 //       <div
 //         className="center"
@@ -115,7 +136,7 @@
 //       <div className="right">
 //         <h2>flavour: {props.name}</h2>
 //         <p>
-//           <strong>description</strong>: <span>{props.description}</span>
+//           <strong>description</strong>: {props.description}
 //         </p>
 //         <p>
 //           <strong>Creator:</strong> {props.creator}
@@ -128,4 +149,3 @@
 //     </>
 //   );
 // }
-// <ProductCard name={""} description={""} image={""} creator={""} purchaseHistory={0} />

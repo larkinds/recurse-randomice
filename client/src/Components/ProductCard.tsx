@@ -27,7 +27,6 @@ export default function ProductCard(props: ProductCardProps) {
           </p>
           <p>{user}</p>
           <img src={props.image} style={{ width: "250px", height: "250px" }} />
-          {/* Need to write code to search ice-cream by id from localStorage below */}
           {state.iceCream.map((iceCreamOrderGroup) => (
             <div key={iceCreamOrderGroup.id}>
               <button
@@ -62,7 +61,7 @@ export default function ProductCard(props: ProductCardProps) {
         <div className="right">
           <h2>flavour: {props.name}</h2>
           <p>
-            <strong>description</strong>: <span>{props.description}</span>
+            <strong>description</strong>: {props.description}
           </p>
           <p>
             <strong>Creator:</strong> {props.creator}
