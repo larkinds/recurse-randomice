@@ -3,18 +3,21 @@ import { Link } from "react-router-dom";
 import IceCreamLogo from "./IceCreamLogo";
 import CartPage from "../pages/cart/CartPage";
 import styles from "./header.module.css";
-
+import LogIn from "./LogIn";
 
 export default function IceCreamHeader() {
   const [currentPagePath, setCurrentPagePath] = useState<string>("/");
-  
+
   function handleSetStarPage(path: string) {
-    setCurrentPagePath(path)
+    setCurrentPagePath(path);
   }
 
   return (
     <header className={styles["header-container"]}>
-      <Link to="/" onClick={() => handleSetStarPage("/")}><IceCreamLogo />Randomice</Link>
+      <Link to="/" onClick={() => handleSetStarPage("/")}>
+        <IceCreamLogo />
+        Randomice
+      </Link>
       <nav>
         <ul className={styles["nav-container"]}>
           <NavOption
@@ -32,7 +35,8 @@ export default function IceCreamHeader() {
         </ul>
       </nav>
       <div className={styles["header-end"]}>
-        <button className={styles["login-button"]}>login/logout</button>
+        <LogIn />
+        <></>
         <CartPage />
       </div>
     </header>
@@ -49,8 +53,13 @@ interface NavOptionProps {
 function NavOption(props: NavOptionProps) {
   return (
     <li className={styles["nav-item"]}>
-      <Link to={props.destinationUrl} onClick={() => props.setCurrentPagePath(props.destinationUrl)}>{props.currentPagePath === props.destinationUrl ? "*" : ""} 
-        {props.destinationPage}</Link>
+      <Link
+        to={props.destinationUrl}
+        onClick={() => props.setCurrentPagePath(props.destinationUrl)}
+      >
+        {props.currentPagePath === props.destinationUrl ? "*" : ""}
+        {props.destinationPage}
+      </Link>
     </li>
   );
 }

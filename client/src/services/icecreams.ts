@@ -1,9 +1,18 @@
 import axios from "axios";
-const iceCreamUrl = "http://localhost:3003/api/icecreams/suggestions/5";
 const phraseUrl = "http://localhost:3003/api/words/";
+const iceCreamUrl = " http://localhost:3003/api/icecreams"
+
+
+type newFlavor = {
+  name: string;
+  isUserGenerated: boolean;
+  userId: string;
+  dateCreated: Date;
+};
+
 
 const getFive = () => {
-  const request = axios.get(iceCreamUrl)
+  const request = axios.get(`${iceCreamUrl}/suggestions/5`)
   .then((response) => response.data)
   .catch(function (error) {
     console.log(error.toJSON());
@@ -29,4 +38,12 @@ const getNoun = async () => {
   return request
 };
 
-export default { getFive, getAdjective, getNoun };
+const saveFlavor = async (iceCream: newFlavor) => {
+
+await axios.post(iceCreamUrl, iceCream
+  ).catch(function (error) {
+    console.log(error.toJSON());
+  }); 
+}
+
+export default { getFive, getAdjective, getNoun, saveFlavor };

@@ -1,6 +1,9 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import FlavorThumbnail, { Flavor } from "../../components/FlavorThumbnail";
 import iceCreamService from "../../services/icecreams";
+import { useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const makePhrases = async (len: number) => {
   const userFlavors: Flavor[] = new Array<Flavor>();
@@ -12,16 +15,36 @@ const makePhrases = async (len: number) => {
     userFlavors.push({
       name: phrase,
       price: 0,
-      image: "/strawberry-icecream.jpg",
+      imageURL: "/strawberry-icecream.jpg",
+      quantity: 1,
+      userGenerated: false,
     });
   }
   return userFlavors;
 };
 
-export default function HomePage() {
+export default function HomePage({ currentFlavor = null }) {
+  const { isLoaded, isSignedIn, user } = useUser();
+  let navigate = useNavigate();
+
   const [generatedFlavors, setGeneratedFlavors] = useState<Flavor[]>([]);
   const [userFlavors, setUserFlavors] = useState<Flavor[]>([]);
   const [newFlavor, setNewFlavor] = useState<Flavor>();
+  const [generatedImage, setGeneratedImage] = useState<string>("");
+
+  async function handleSaveFlavor() {
+    if (isSignedIn) {
+      await iceCreamService.saveFlavor({
+        name: newFlavor.name,
+        userId: user.username,
+        isUserGenerated: true,
+        dateCreated: new Date(),
+        imageURL: generatedImage,
+      });
+    } else {
+      navigate("sign-in");
+    }
+  }
 
   const generateFlavors = async () => {
     setGeneratedFlavors(await iceCreamService.getFive());
@@ -33,11 +56,20 @@ export default function HomePage() {
   }, []);
 
   async function handleRegenerateClick() {
-    setNewFlavor((await makePhrases(1)).pop());
+    let nF = (await makePhrases(1)).pop();
+    setNewFlavor(nF);
+    await axios
+      .post("http://localhost:3003/api/image", {
+        prompt: `"${nF.name}" flavored icecream`,
+        flavor: nF.name,
+      })
+      .then((response) => {
+        setGeneratedImage(response.data);
+      });
   }
 
   return (
-      <div className=" bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#fcd1e2] to-[#b0abf4] ">
+    <div className=" bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#fcd1e2] to-[#b0abf4] ">
       <div className="mx-auto max-w-2xl lg:text-center">
         <h2 className="text-base mt-10 font-semibold leading-7 text-indigo-600">
           Ice Cream Store
@@ -49,7 +81,16 @@ export default function HomePage() {
           Enjoy the taste of our randomly generated silly flavors!
         </p>
       </div>
-
+      {newFlavor ? (
+        <img
+          src={generatedImage}
+          className="mx-auto"
+          width={"400px"}
+          alt={`Photo of ${newFlavor} `}
+        />
+      ) : (
+        <></>
+      )}
       <div className="mx-auto mt-16 max-w-xl sm:mt-20">
         <p className="text-center block text-sm font-semibold leading-6 text-gray-900">
           You're about to create a never-before-seen flavor
@@ -83,8 +124,14 @@ export default function HomePage() {
               >
                 Discover a different ice-cream
               </button>
-              <button className="block w-60 rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                Save Flavor & Add to cart🍨
+              <button
+                className="block w-30 rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={handleSaveFlavor}
+              >
+                Save Flavor
+              </button>
+              <button className="block w-30 rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                Add to cart🍨
               </button>
             </div>
           ) : (
@@ -97,19 +144,19 @@ export default function HomePage() {
           )}
         </div>
       </div>
-      <div >
+      <div>
         <div className="flex justify-center flex-wrap m-10 gap-3">
           {generatedFlavors.map((flavor) => (
-            <div className="bg-white">
-              <FlavorThumbnail key={flavor.name} flavor={flavor} />
+            <div className="bg-white" key={flavor.name}>
+              <FlavorThumbnail flavor={flavor} />
             </div>
           ))}
         </div>
 
         <div className="flex justify-center flex-wrap m-10 gap-3">
           {userFlavors.map((flavor) => (
-            <div className="bg-white">
-              <FlavorThumbnail key={flavor.name} flavor={flavor} />
+            <div className="bg-white" key={flavor.name}>
+              <FlavorThumbnail flavor={flavor} />
             </div>
           ))}
         </div>

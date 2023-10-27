@@ -5,6 +5,17 @@ import * as argon2 from "argon2";
 const userRouter = express.Router();
 userRouter.use(express.json());
 
+
+userRouter.get("/username/:username", async (request: Request, response: Response) => {
+  const userName = request.params.username;
+  const userResponse = await User.findOne({ username: userName }).exec();
+  if (userResponse){
+    return response.status(200).json(true)}
+  else{
+    return response.status(200).json(false)}
+  }
+)
+
 userRouter.post("/", async (request: Request, response: Response) => {
   try {
     const { username, password } = request.body;
