@@ -1,64 +1,77 @@
-import styles from ".flavorpage.module.css";
-import React from "react";
+import styles from "./flavorpage.module.css";
+import { useEffect, useState } from "react";
 import ToppingsBar from "../../Components/ToppingsBar";
 import Suggestions from "../../Components/Suggestions";
 import ProductCard from "../../Components/ProductCard";
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
-const flavorSuggestions = await axios
-  .get(`http://localhost:3003/api/icecreams/suggestions/3`)
-  .then((res) => res.data);
+async function getFlavorSuggestions() {
+  // type dict = {[key:string]:{id:string, urlLink:string, image:string}[]};
 
-function FlavorPage() {
-  let SuggestionsList = flavorSuggestions.map((dict) => ({
+  const flavorSuggestions = await axios.get(
+    `http://localhost:3003/api/icecreams/suggestions/3`,
+  );
+  return flavorSuggestions.data.map((dict) => ({
     id: dict["_id"],
     urlLink: `/flavor/${dict["name"]}`,
     image: dict["imageURL"],
   }));
+}
 
+async function getFlavorInfo(flavor) {
+  const response = await axios.get(
+    `http://localhost:3003/api/icecreams/name/${flavor}`,
+  );
+  return response.data;
+}
+
+async function getQuantity(flavor) {
+  const soldQuantity = await axios.get(
+    `http://localhost:3003/api/hof/name/${flavor}`,
+  );
+  return soldQuantity.data.quantity;
+}
+
+export default function FlavorPage() {
   const navigate = useNavigate();
-
   const { flavor } = useParams();
-
-  const [creator, setCreator] = useState("");
-  const [quantity, setQuantity] = useState(0);
-  const [image, setImage] = useState("");
+  const [state, setState] = useState({ creator: "", quantity: 0, image: "" });
+  const[flavorSuggestions, setFlavorSuggestions] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const flavorInfo = await axios
-        .get(`http://localhost:3003/api/icecreams/name/${flavor}`)
-        .then((res) => res.data);
-      if (flavorInfo) {
-        setCreator(flavorInfo.userId);
-        setImage(flavorInfo.imageURL);
-        const hofFlavors = await axios
-          .get(`http://localhost:3003/api/hof/name/${flavor}`)
-          .then((res) => {
-            setQuantity(res.data.quantity);
-          });
+    async function fetchData() {
+      const gotFlavorSuggestions = await getFlavorSuggestions();
+      const flavorInfo = await getFlavorInfo(flavor);
+      if (gotFlavorSuggestions && flavorInfo) {
+        setFlavorSuggestions(gotFlavorSuggestions);
+        setState({
+          creator: flavorInfo.userId,
+          image: flavorInfo.imageURL,
+          quantity: await getQuantity(flavor),
+        });
       } else {
         navigate("/error_page");
       }
-    };
+    }
     fetchData();
-  }, []);
+  }, [flavor, navigate]);
 
   return (
     <>
       <ProductCard
         name={flavor}
         description={"Description Goes Here!"}
-        image={image}
-        creator={creator}
-        purchaseHistory={quantity}
+        image={state.image}
+        creator={state.creator}
+        purchaseHistory={state.quantity}
+        className={styles.productCard}
       />
       <ToppingsBar />
-      <Suggestions itemList={SuggestionsList} />
+      <Suggestions
+        itemList={flavorSuggestions}
+        className={styles.suggestions}
+      />
     </>
   );
 }
-
-export default FlavorPage;

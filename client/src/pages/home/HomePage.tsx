@@ -147,16 +147,16 @@ export default function HomePage({ currentFlavor = null }) {
       <div>
         <div className="flex justify-center flex-wrap m-10 gap-3">
           {generatedFlavors.map((flavor) => (
-            <div className="bg-white">
-              <FlavorThumbnail key={flavor.name} flavor={flavor} />
+            <div className="bg-white" key={flavor.name}>
+              <FlavorThumbnail flavor={flavor} />
             </div>
           ))}
         </div>
 
         <div className="flex justify-center flex-wrap m-10 gap-3">
           {userFlavors.map((flavor) => (
-            <div className="bg-white">
-              <FlavorThumbnail key={flavor.name} flavor={flavor} />
+            <div className="bg-white" key={flavor.name}>
+              <FlavorThumbnail flavor={flavor} />
             </div>
           ))}
         </div>

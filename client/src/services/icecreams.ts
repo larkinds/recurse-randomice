@@ -40,8 +40,7 @@ const getNoun = async () => {
 
 const saveFlavor = async (iceCream: newFlavor) => {
 
-  console.log(iceCream)
-  await axios.post(iceCreamUrl, iceCream
+await axios.post(iceCreamUrl, iceCream
   ).catch(function (error) {
     console.log(error.toJSON());
   }); 
