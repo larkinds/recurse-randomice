@@ -6,7 +6,6 @@ const hofFlavors = await axios.get("http://localhost:3003/api/hof");
 
 const flavors: Flavor[] = [];
 hofFlavors.data.forEach((flavor: any) => {
-  console.log(flavor);
   flavors.push({
     name: flavor["name"],
     price: 0,
