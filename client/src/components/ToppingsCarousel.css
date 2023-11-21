@@ -1,5 +1,5 @@
 .toppings-carousel {
-    display: flex;
-    flex-direction: row;
-    overflow: auto;
+  display: flex;
+  flex-direction: row;
+  overflow: auto;
 }

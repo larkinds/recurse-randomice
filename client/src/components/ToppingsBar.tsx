@@ -1,13 +1,11 @@
-import { useState } from "react";
 import ToppingsCarousel from "./ToppingsCarousel";
 
-import "./ToppingsBar.css";
+import "./toppingsbar.css";
 
 function ToppingsBar() {
-
   return (
     <>
-      <div className='toppingbar-title'>
+      <div className="toppingbar-title">
         <strong>toppings</strong>
         <ToppingsCarousel />
       </div>

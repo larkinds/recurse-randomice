@@ -1,17 +1,17 @@
 .suggestion-list {
-    text-align: center;
-    padding: 0;
-    margin-block: 5;
+  text-align: center;
+  padding: 0;
+  margin-block: 5;
 }
 
 .suggestion-item {
-    width: 20%;
-    display: inline-block;
-    padding: 10px;
-    vertical-align: top;
+  width: 20%;
+  display: inline-block;
+  padding: 10px;
+  vertical-align: top;
 }
 
 .suggestion-image {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }

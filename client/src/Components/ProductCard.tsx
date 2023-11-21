@@ -10,9 +10,7 @@ type ProductCardProps = {
   purchaseHistory: number;
 };
 
-export default function ProductCard(
-  props
-  : ProductCardProps) {
+export default function ProductCard(props: ProductCardProps) {
   const [scoopsCounter, setScoopsCounter] = useState<number>(0);
   const localStorage = useContext(LocalStorageContext);
   console.log({localStorage})
