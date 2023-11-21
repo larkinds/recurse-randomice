@@ -19,13 +19,9 @@ function ToppingsCarousel() {
         const newArr: string[] = toppingImgUrls.slice();
         if (newArr.length > 1) {
             if (direction == 'left') {
-                // .shift() removes and returns the first element of the array.
-                // .push() pushes the value onto the end of the array.
                 const topping = newArr.shift();
                 if (topping) newArr.push(topping);
             } else {
-                // .pop() removes and returns the last element of the array.
-                // .unshift() 'pushes' the value onto the beginning of the array.
                 const topping = newArr.pop();
                 if (topping) newArr.unshift(topping);
             }

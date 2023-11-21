@@ -39,12 +39,30 @@
 
 .add-to-cart-button {
     border: 1px solid black;
-    padding: 4px;
+    padding: 6px;
+    border-radius: .5rem;
 }
 
 .add-to-cart-button:hover {
     color: white;
     background-color: black;
+}
+
+.scoops-counter {
+    border: 1px solid black;
+    border-radius: 50%;
+    padding: 4px 12px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.increase-decrease:hover {
+    color: white;
+}
+
+.increase-decrease:disabled {
+    color: darkgrey;
 }
 
 @media (max-width: 550px) {

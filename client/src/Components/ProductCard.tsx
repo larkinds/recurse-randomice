@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-import { LocalStorageContext } from "../context/DataContext";
+import { useState } from "react";
 import "./productcard.css";
 
 type ProductCardProps = {
@@ -10,19 +9,13 @@ type ProductCardProps = {
   purchaseHistory: number;
 };
 
-//todo: make the counter button a stable size
-
-export default function ProductCard(
-  props
-  : ProductCardProps) {
+export default function ProductCard(props: ProductCardProps) {
   const [scoopsCounter, setScoopsCounter] = useState<number>(0);
 
   return (
     <div className="single-product-grid">
       <div className="left">
-        <p>
-          revolutionary offer: $0
-        </p>
+        <p>revolutionary offer: $0</p>
         <img src={props.image} style={{ width: "250px", height: "250px" }} />
         <div className="button-container">
           <button className="add-to-cart-button">add to cart</button>
@@ -32,11 +25,18 @@ export default function ProductCard(
               onClick={() =>
                 setScoopsCounter((prevScoopCounter) => prevScoopCounter - 1)
               }
+              className="increase-decrease"
             >
               -
             </button>
-            <p style={{ border: "1px solid black", borderRadius: "50%", padding: "4px 12px" }}>{scoopsCounter}</p>
-            <button 
+            <div
+              className="scoops-counter"
+            >
+              <p>{scoopsCounter}</p>
+            </div>
+
+            <button
+            className="increase-decrease"
               disabled={scoopsCounter >= 10}
               onClick={() =>
                 setScoopsCounter((prevScoopCounter) => prevScoopCounter + 1)
@@ -49,7 +49,9 @@ export default function ProductCard(
       </div>
       <div className="center"></div>
       <div className="right">
-        <h2 className="title" style={{fontSize: "2rem"}}>flavor: {props.name}</h2>
+        <h2 className="title" style={{ fontSize: "2rem" }}>
+          flavor: {props.name}
+        </h2>
         <p>
           <strong>description</strong>: <span>{props.description}</span>
         </p>
