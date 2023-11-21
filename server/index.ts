@@ -7,7 +7,8 @@ import orderItemRouter from './controllers/orderitems';
 import phraseRouter from './controllers/phrases';
 import toppingRouter from './controllers/toppings';
 import orderRouter from "./controllers/orders";
-import cors from "cors";
+import hofRouter from './controllers/halloffame';
+import cors from "cors"
 
 const app: Express = express();
 const port = PORT;
@@ -19,6 +20,8 @@ app.use("/api/orders", orderRouter);
 app.use('/api/orderitems', orderItemRouter)
 app.use('/api/words', phraseRouter)
 app.use('/api/toppings', toppingRouter);
+app.use('/api/hof', hofRouter)
+
 
 const start = async () => {
   try {

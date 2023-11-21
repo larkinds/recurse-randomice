@@ -4,6 +4,8 @@ export type Flavor = {
   name: string;
   price: number;
   image: string;
+  quantity: number;
+  userGenerated: boolean;
 };
 
 export default function FlavorThumbnail({ flavor }: { flavor: Flavor }) {
