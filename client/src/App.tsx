@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import HallOfFame from "./pages/hallOfFame/HallOfFame";
 import ErrorPage from "./pages/error/Error";
+import SingleProduct from "./pages/singleProduct/SingleProduct";
 import { CartContextProvider } from "./context/CartContext";
 import { UserContextProvider } from "./context/UserContext";
 
@@ -15,6 +16,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="hall-of-fame" element={<HallOfFame />} />
+              <Route path="flavor/:flavorName" element={<SingleProduct />} />
               <Route path="*" element={<ErrorPage />} />
             </Routes>
           </Layout>

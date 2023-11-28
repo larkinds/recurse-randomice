@@ -1,14 +1,12 @@
-import { useState } from "react";
 import ToppingsCarousel from "./ToppingsCarousel";
-
-import "./ToppingsBar.css";
+import styles from "./toppings-bar.module.css"
 
 function ToppingsBar() {
 
   return (
     <>
-      <div className='toppingbar-title'>
-        <strong>toppings</strong>
+      <div className={styles.container}>
+        <h3 style={{fontSize: "1.5rem"}}>Toppings Bar</h3>
         <ToppingsCarousel />
       </div>
     </>

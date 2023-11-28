@@ -1,21 +1,19 @@
+import { Link } from "react-router-dom";
 import "./Suggestions.css";
+import { Flavor } from "./FlavorThumbnail";
 
-type SuggestionItemProps = {
-  id: number;
-  image: string;
-  urlLink: string;
-};
 
 type SuggestionListProps = {
-  itemList: SuggestionItemProps[];
+  itemList: Flavor[];
 };
 
-function SuggestionItem(item: SuggestionItemProps) {
+function SuggestionItem(item: Flavor) {
   return (
     <div className="suggestion-item">
-      <a href={item.urlLink} target="_blank" rel="noreferrer">
+      <Link to={`/flavor/${item.name}`} state={{flavor: item}}>
+        {item.name}
         <img className="suggestion-image" src={item.image} alt="flavor" />
-      </a>
+      </Link>
     </div>
   );
 }
@@ -23,10 +21,12 @@ function SuggestionItem(item: SuggestionItemProps) {
 export default function Suggestions({ itemList }: SuggestionListProps) {
   return (
     <div className="suggestion-list">
-      <p>This flavor goes well with:</p>
-      {itemList.map((item) => (
-        <SuggestionItem key={item.id} {...item} />
+      <h2 className="suggestions-title">Similar Flavors</h2>
+      <div className="suggestions">
+      {itemList.map((item, i) => (
+        <SuggestionItem key={item.name + i} {...item} />
       ))}
+      </div>
     </div>
   );
 }

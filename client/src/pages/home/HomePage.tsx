@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import FlavorThumbnail, { Flavor } from "../../components/FlavorThumbnail";
 import iceCreamService from "../../services/icecreams";
+import { Link } from "react-router-dom";
 
 const makePhrases = async (len: number) => {
   const userFlavors: Flavor[] = new Array<Flavor>();
 
   for (let i = 0; i < len; i++) {
-    let adjective = (await iceCreamService.getAdjective()).name;
-    let noun = (await iceCreamService.getNoun()).name;
-    let phrase = adjective + " " + noun;
+    const adjective = (await iceCreamService.getAdjective()).name;
+    const noun = (await iceCreamService.getNoun()).name;
+    const phrase = adjective + " " + noun;
     userFlavors.push({
       name: phrase,
       price: 0,
@@ -100,17 +101,21 @@ export default function HomePage() {
       <div >
         <div className="flex justify-center flex-wrap m-10 gap-3">
           {generatedFlavors.map((flavor) => (
+            <Link to={`flavor/${flavor.name}`} state={{flavor: flavor}}>
             <div className="bg-white">
               <FlavorThumbnail key={flavor.name} flavor={flavor} />
             </div>
+            </Link>
           ))}
         </div>
 
         <div className="flex justify-center flex-wrap m-10 gap-3">
           {userFlavors.map((flavor) => (
+            <Link to={`flavor/${flavor.name}`} state={{flavor: flavor}}>
             <div className="bg-white">
               <FlavorThumbnail key={flavor.name} flavor={flavor} />
             </div>
+            </Link>
           ))}
         </div>
       </div>

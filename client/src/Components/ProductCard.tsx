@@ -1,10 +1,5 @@
-import { useCartContext } from "../context/CartContext";
+import { useState } from "react";
 import "./productcard.css";
-import {
-  incrementIceCream,
-  decrementIceCream,
-} from "../utils/DispatchUtils";
-import { useUserContext } from "../context/UserContext";
 
 type ProductCardProps = {
   name: string;
@@ -15,62 +10,58 @@ type ProductCardProps = {
 };
 
 export default function ProductCard(props: ProductCardProps) {
-  const { state, dispatch } = useCartContext();
-  const { user } = useUserContext();
+  const [scoopsCounter, setScoopsCounter] = useState<number>(0);
 
   return (
-    <>
-      <div className="single-product-grid">
-        <div className="left">
-          <p>
-            <strong>revolutionary offer:</strong> $0
-          </p>
-          <p>{user}</p>
-          <img src={props.image} style={{ width: "250px", height: "250px" }} />
-          {state.iceCream.map((iceCreamOrderGroup) => (
-            <div key={iceCreamOrderGroup.id}>
-              <button
-                onClick={() =>
-                  dispatch(incrementIceCream(iceCreamOrderGroup.id))
-                }
-              >
-                +
-              </button>
-
-              <p>{iceCreamOrderGroup.quantity}</p>
-
-              <button
-                onClick={() =>
-                  dispatch(decrementIceCream(iceCreamOrderGroup.id))
-                }
-              >
-                -
-              </button>
+    <div className="single-product-grid">
+      <div className="left">
+        <p>revolutionary offer: $0</p>
+        <img src={props.image} style={{ width: "250px", height: "250px" }} />
+        <div className="button-container">
+          <button className="add-to-cart-button">add to cart</button>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <button
+              disabled={!scoopsCounter}
+              onClick={() =>
+                setScoopsCounter((prevScoopCounter) => prevScoopCounter - 1)
+              }
+              className="increase-decrease"
+            >
+              -
+            </button>
+            <div
+              className="scoops-counter"
+            >
+              <p>{scoopsCounter}</p>
             </div>
-          ))}
-        </div>
-        <div
-          className="center"
-          style={{
-            borderLeft: "2px solid black",
-            height: "80%",
-            marginTop: "auto",
-            marginBottom: "auto",
-          }}
-        ></div>
-        <div className="right">
-          <h2>flavour: {props.name}</h2>
-          <p>
-            <strong>description</strong>: {props.description}
-          </p>
-          <p>
-            <strong>Creator:</strong> {props.creator}
-          </p>
-          <p>
-            <strong>Times Purchased:</strong> {props.purchaseHistory}
-          </p>
+
+            <button
+            className="increase-decrease"
+              disabled={scoopsCounter >= 10}
+              onClick={() =>
+                setScoopsCounter((prevScoopCounter) => prevScoopCounter + 1)
+              }
+            >
+              +
+            </button>
+          </div>
         </div>
       </div>
-    </>
+      <div className="center"></div>
+      <div className="right">
+        <h2 className="title" style={{ fontSize: "2rem" }}>
+          flavor: {props.name}
+        </h2>
+        <p>
+          <strong>description</strong>: <span>{props.description}</span>
+        </p>
+        <p>
+          <strong>Creator:</strong> {props.creator}
+        </p>
+        <p>
+          <strong>Times Purchased:</strong> {props.purchaseHistory}
+        </p>
+      </div>
+    </div>
   );
 }

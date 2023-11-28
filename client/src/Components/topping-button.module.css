@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.topping-img {
+    width: 3.125rem;
+    height: 3.125rem;
+    padding: .2rem;
+    border-radius: 50%;
+    border: 1px solid black;
+}

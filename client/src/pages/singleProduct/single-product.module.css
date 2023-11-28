@@ -1,0 +1,9 @@
+.container {
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding-bottom: 2rem;
+    background: linear-gradient(#bebaf4, #b5e2fe)
+}
