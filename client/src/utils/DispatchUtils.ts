@@ -5,18 +5,21 @@ export const setCart = (cart: Cart): CartAction => {
   return { type: "SET_CART", payload: { cart } };
 };
 
-export const addIceCream = (iceCreamName: string): CartAction => {
+export const addIceCream = (iceCreamName: string, image: string, quantity: number = 1): CartAction => {
   const id = uuid();
   return {
     type: "ADD_ICECREAM",
     payload: {
       id,
       iceCreamName,
+      image,
+      quantity
     },
   };
 };
 
 export const incrementIceCream = (id: string): CartAction => {
+  console.log("increment")
   return { type: "INCREMENT_ICECREAM", payload: { id } };
 };
 

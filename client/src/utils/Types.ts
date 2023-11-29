@@ -16,6 +16,7 @@ export type CartAction = {
     id?: string;
     quantity?: number;
     iceCreamName?: string;
+    image?: string;
     isAdded?: boolean;
     cart?: Cart;
   };
@@ -30,12 +31,14 @@ export type IceCreamOrderGroup = {
   id: string;
   quantity: number;
   iceCreamName: string;
+  image: string;
 };
 
 export type AddIceCreamOrderGroupAction = {
   type: "add_icecream";
   id: string;
   iceCreamName: string;
+  image: string;
 };
 
 export type IceCreamOrderGroupAction = {

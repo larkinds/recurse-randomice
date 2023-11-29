@@ -32,7 +32,7 @@ export const CartContextProvider: React.FC<{ children: ReactNode }> = ({
     setCart,
   );
 
-  return (
+  return (                      
     // Provide the context value to children components using CartContext.Provider.
     <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
   );

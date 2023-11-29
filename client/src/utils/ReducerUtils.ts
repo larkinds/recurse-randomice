@@ -13,9 +13,14 @@ export const changeQuantity = (
   action: CartAction,
   num: number,
 ): IceCreamOrderGroup[] => {
+  console.log("change quantity")
   if (prevState.iceCream) {
     return prevState.iceCream
-      ?.filter((iceCreamOrderGroup) => iceCreamOrderGroup.quantity + num > 0)
+      ?.filter((iceCreamOrderGroup) => {
+        if (iceCreamOrderGroup.id !== action.payload.id) {
+          return true;
+        }
+        return iceCreamOrderGroup.quantity + num > 0})
       .map((iceCreamOrderGroup) => {
         if (iceCreamOrderGroup.id === action.payload.id) {
           return {
@@ -64,11 +69,12 @@ export const addIceCreamToReducer = (
 ): IceCreamOrderGroup[] => {
   const newIceCream: IceCreamOrderGroup = {
     id: action.payload.id || "",
-    quantity: 1,
+    quantity: action.payload.quantity || 1,
     iceCreamName: action.payload.iceCreamName || "",
+    image: action.payload.image || "",
   };
   if (prevState.iceCream) {
-    var incremented = false;
+    let incremented = false;
     const newState = prevState.iceCream.map((iceCreamOrderGroup) => {
       if (iceCreamOrderGroup.iceCreamName === action.payload.iceCreamName) {
         incremented = true;

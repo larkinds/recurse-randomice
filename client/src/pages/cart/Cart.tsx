@@ -1,41 +1,16 @@
-import { useState } from "react";
 import { Button, Modal } from "../../components";
+import { useCartContext } from "../../context/CartContext";
+import { IceCreamOrderGroup } from "../../utils/Types";
 import styles from "./cart.module.css";
+import { decrementIceCream, incrementIceCream, removeIceCream, removeTopping } from "../../utils/DispatchUtils";
 
 type Item = {
-  id: number;
+  id: string;
   image: string;
-  flavor: string;
-  price: number;
+  iceCreamName: string;
   quantity: number;
 };
 
-const itemList: Item[] = [
-  {
-    id: 1,
-    image:
-      "https://media.istockphoto.com/id/980474978/vector/strawberry-ice-cream-cone-flat-design-dessert-icon.jpg?s=612x612&w=0&k=20&c=kY7enczOhemyXVu5Jp2pmVbv5SfQPj03zcqb27fJv4I=",
-    flavor: "strawberry",
-    price: 0,
-    quantity: 1,
-  },
-  {
-    id: 2,
-    image:
-      "https://img.freepik.com/free-vector/chocolate-ice-creame-waffle-cone-sticker_1308-68693.jpg?w=2000",
-    flavor: "chocolate",
-    price: 0,
-    quantity: 3,
-  },
-  {
-    id: 3,
-    image:
-      "https://thumbs.dreamstime.com/b/ice-cream-cone-vector-cartoon-illustration-vanilla-213405239.jpg",
-    flavor: "vanilla",
-    price: 0,
-    quantity: 2,
-  },
-];
 
 type CartProps = {
   isOpen: boolean;
@@ -43,21 +18,28 @@ type CartProps = {
 };
 
 export default function Cart({ isOpen, onClose }: CartProps) {
-  const [items, setItems] = useState(itemList);
+  const { state, dispatch } = useCartContext();
 
-  function handleDeleteItem(id: Item["id"]) {
-    setItems((items) => items.filter((item) => item.id !== id));
+  function handleDeleteItemIceCream(id: Item["id"]) {
+    dispatch(removeIceCream(id))
+  }
+
+  function handleDeleteItemTopping(id: Item["id"]) {
+    dispatch(removeTopping(id))
   }
 
   function handleUpdateQuantity(id: Item["id"], newQuantity: Item["quantity"]) {
-    const updatedItems = items.map((item) => {
-      if (item.id === id) {
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
-    });
+    const iceCreamToUpdate = state.iceCream.find((flavor) => flavor.id === id);
 
-    setItems(updatedItems);
+    if (iceCreamToUpdate!.quantity > newQuantity) {
+      for (let i = 0; i < iceCreamToUpdate!.quantity - newQuantity; i++) {
+        dispatch(decrementIceCream(id))
+      }
+    } else {
+      for (let i = 0; i < newQuantity - iceCreamToUpdate!.quantity ; i++) {
+        dispatch(incrementIceCream(id))
+      }
+    }
   }
 
   return (
@@ -67,12 +49,11 @@ export default function Cart({ isOpen, onClose }: CartProps) {
       containerClassNames={styles.modal}
       buttonClassNames={styles.modalCloseBtn}
     >
-      {/* Currently getting data from a constant but will eventually either need to make this dynamic */}
-      {items.map((item) => (
+      {state.iceCream.map((item) => (
         <CartItem key={item.id}>
           <ItemDetails item={item} />
           <div className={styles.actionBtns}>
-            <RemoveBtn itemId={item.id} onDeleteItem={handleDeleteItem} />
+            <RemoveBtn itemId={item.id} onDeleteItem={handleDeleteItemIceCream} />
             <Quantity item={item} onUpdate={handleUpdateQuantity} />
           </div>
         </CartItem>
@@ -99,25 +80,19 @@ function RemoveBtn({
   );
 }
 
-function ItemDetails({ item }: { item: Item }) {
+function ItemDetails({ item }: { item: IceCreamOrderGroup }) {
   return (
     <div className={styles.details}>
       <div className={styles.flavor}>
-        <img src={item.image} alt={item.flavor} />
-        <span> {item.flavor} </span>
+        <img src={item.image ? item.image : "https://media.istockphoto.com/id/980474978/vector/strawberry-ice-cream-cone-flat-design-dessert-icon.jpg?s=612x612&w=0&k=20&c=kY7enczOhemyXVu5Jp2pmVbv5SfQPj03zcqb27fJv4I="} alt={item.iceCreamName} />
+        <span> {item.iceCreamName} </span>
       </div>
-      <p> ${item.price} </p>
+      <p>$0</p>
     </div>
   );
 }
 
-function Quantity({
-  item,
-  onUpdate,
-}: {
-  item: Item;
-  onUpdate: (id: Item["id"], newQuantity: Item["quantity"]) => void;
-}) {
+function Quantity({item, onUpdate}: { item: Item; onUpdate: (id: Item["id"], newQuantity: Item["quantity"]) => void; }) {
   function handleIncrement() {
     onUpdate(item.id, item.quantity + 1);
   }
