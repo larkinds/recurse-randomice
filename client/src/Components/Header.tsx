@@ -11,13 +11,16 @@ export default function IceCreamHeader() {
   }
 
   return (
-    <header className="w-full flex justify-between items-center h-[100px] px-4">
+    <header className="w-full flex justify-between items-center h-[100px] px-4 mt-4">
       <Link to="/" onClick={() => handleSetStarPage("/")}>
-        <IceCreamLogo />
-        Randomice
+      <div className="flex items-center justify-center mb-2">
+        <IceCreamLogo/>
+        </div>
+           <span className="mx-2">Randomice </span>  
       </Link>
+
       <nav>
-        <ul className="flex justify-center list-none mb-0">
+        <ul className="flex justify-center list-none ml-2">
           <NavOption
             className="flex"
             destinationUrl="/hall-of-fame"
@@ -34,9 +37,9 @@ export default function IceCreamHeader() {
           />
         </ul>
       </nav>
-      <div className="flex min-w-[10rem]">
-        <button className="mr-2.5">login/logout</button>
+      <div className="flex ml-auto">
         <CartPage />
+        <button className="ml-2.5 mr-2.5 hover:underline">login/logout</button>
       </div>
     </header>
   );
@@ -54,7 +57,7 @@ function NavOption({ className, destinationUrl, destinationPage, currentPagePath
   const isActive = currentPagePath === destinationUrl;
   const linkBaseClasses = "text-center block py-2 px-4 rounded w-auto whitespace-nowrap";
   const activeClasses = "border bg-purple-500 hover:bg-purple-700 text-white";
-  const inactiveClasses = "border border-white text-black-500 hover:border-black hover:bg-white";
+  const inactiveClasses = "border border-white text-black-500 hover:border-black";
 
   return (
     <li className={`${className}`}>
