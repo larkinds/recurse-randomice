@@ -5,13 +5,15 @@ export const setCart = (cart: Cart): CartAction => {
   return { type: "SET_CART", payload: { cart } };
 };
 
-export const addIceCream = (iceCreamName: string): CartAction => {
+export const addIceCream = (iceCreamName: string, image: string, quantity: number = 1): CartAction => {
   const id = uuid();
   return {
     type: "ADD_ICECREAM",
     payload: {
       id,
       iceCreamName,
+      image,
+      quantity
     },
   };
 };
@@ -28,10 +30,10 @@ export const removeIceCream = (id: string): CartAction => {
   return { type: "REMOVE_ICECREAM", payload: { id } };
 };
 
-export const addTopping = (id: string): CartAction => {
-  return { type: "ADD_TOPPING", payload: { id } };
+export const addTopping = (name: string, url: string): CartAction => {
+  return { type: "ADD_TOPPING", payload: { name, url } };
 };
 
-export const removeTopping = (id: string): CartAction => {
-  return { type: "REMOVE_TOPPING", payload: { id } };
+export const removeTopping = ( url: string): CartAction => {
+  return { type: "REMOVE_TOPPING", payload: { url } };
 };

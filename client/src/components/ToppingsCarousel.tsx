@@ -1,22 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ArrowButton from "./ArrowButton";
 import ToppingButton from "./ToppingButton";
-import Strawberry from "../assets/images/toppings/strawberry.png";
-import Chocolate from "../assets/images/toppings/chocolate.png"
-import Nuts from "../assets/images/toppings/nuts.png"
-import Sprinkles from "../assets/images/toppings/sprinkles.png"
-import Caramel from "../assets/images/toppings/caramel.png"
-import Marshmallow from "../assets/images/toppings/marshmallow.png"
 import styles from "./toppings-carousal.module.css";
+import { useCartContext } from "../context/CartContext";
+import { ToppingOrderGroup } from "../utils/Types";
 
 const left = 0
 const right = 180
 
 function ToppingsCarousel() {
-    const [toppingImgUrls, setToppingImgUrls] = useState([Caramel, Marshmallow, Strawberry, Chocolate, Nuts, Sprinkles]);
+    const { state } = useCartContext()
+    const [toppingImgUrls, setToppingImgUrls] = useState<ToppingOrderGroup[]>([]);
+
+    useEffect(() => {
+        setToppingImgUrls(state.toppings)
+    }, [state])
+    
     function rotateArr(direction: string): void {
-        // don't mutate original array. make a copy then mutate the copy
-        const newArr: string[] = toppingImgUrls.slice();
+        const newArr: ToppingOrderGroup[] = toppingImgUrls.slice();
         if (newArr.length > 1) {
             if (direction == 'left') {
                 const topping = newArr.shift();
@@ -32,9 +33,9 @@ function ToppingsCarousel() {
     return (
         <div className={styles.container}>
             <ArrowButton rotation={left} handleClick={rotateArr} />
-            {toppingImgUrls.map((url, index) => (
-                <div key={url} hidden={index > 4 ? true : false}>
-                    <ToppingButton url={url} />
+            {toppingImgUrls.map((properties, index) => (
+                <div key={properties.url} hidden={index > 4 ? true : false}>
+                    <ToppingButton {...properties} />
                 </div>
             ))}
             <ArrowButton rotation={right} handleClick={rotateArr} />

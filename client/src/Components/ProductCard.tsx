@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useCartContext } from "../context/CartContext";
+import { addIceCream, incrementIceCream } from "../utils/DispatchUtils";
 import "./productcard.css";
 
 type ProductCardProps = {
@@ -10,7 +12,31 @@ type ProductCardProps = {
 };
 
 export default function ProductCard(props: ProductCardProps) {
-  const [scoopsCounter, setScoopsCounter] = useState<number>(0);
+  const { state, dispatch } = useCartContext();
+  const [scoopsCounter, setScoopsCounter] = useState<number>(1);
+
+  function handleAddToCart() {
+   let iceCreamAlreadyInState = false;
+   let idOfIceCream: string;
+   let quantityOfIceCreamInCart: number = 0;
+
+   for (let i = 0; i < state.iceCream.length; i++) {
+    if (state.iceCream[i].iceCreamName === props.name) {
+      iceCreamAlreadyInState = true;
+      idOfIceCream = state.iceCream[i].id
+      quantityOfIceCreamInCart = state.iceCream[i].quantity;
+    }
+   }
+
+   if (iceCreamAlreadyInState) {
+    const maxPossibleToAdd = 10 - quantityOfIceCreamInCart;
+    for (let i = 0; i < Math.min(maxPossibleToAdd, scoopsCounter); i++) {
+      dispatch(incrementIceCream(idOfIceCream!));
+    }
+   } else {
+    dispatch(addIceCream(props.name, props.image, scoopsCounter));
+   }
+  }
 
   return (
     <div className="single-product-grid">
@@ -18,7 +44,7 @@ export default function ProductCard(props: ProductCardProps) {
         <p>revolutionary offer: $0</p>
         <img src={props.image} style={{ width: "250px", height: "250px" }} />
         <div className="button-container">
-          <button className="add-to-cart-button">add to cart</button>
+          <button className="add-to-cart-button" disabled={!scoopsCounter} onClick={handleAddToCart}>add to cart</button>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <button
               disabled={!scoopsCounter}

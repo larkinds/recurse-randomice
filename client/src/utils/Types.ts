@@ -14,8 +14,11 @@ export type CartAction = {
     | "REMOVE_TOPPING";
   payload: {
     id?: string;
+    url?: string;
+    name?: string;
     quantity?: number;
     iceCreamName?: string;
+    image?: string;
     isAdded?: boolean;
     cart?: Cart;
   };
@@ -30,12 +33,14 @@ export type IceCreamOrderGroup = {
   id: string;
   quantity: number;
   iceCreamName: string;
+  image: string;
 };
 
 export type AddIceCreamOrderGroupAction = {
   type: "add_icecream";
   id: string;
   iceCreamName: string;
+  image: string;
 };
 
 export type IceCreamOrderGroupAction = {
@@ -44,7 +49,8 @@ export type IceCreamOrderGroupAction = {
 };
 
 export type ToppingOrderGroup = {
-  id: string;
+  name: string;
+  url: string;
   isAdded: boolean;
 };
 

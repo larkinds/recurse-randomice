@@ -15,7 +15,11 @@ export const changeQuantity = (
 ): IceCreamOrderGroup[] => {
   if (prevState.iceCream) {
     return prevState.iceCream
-      ?.filter((iceCreamOrderGroup) => iceCreamOrderGroup.quantity + num > 0)
+      ?.filter((iceCreamOrderGroup) => {
+        if (iceCreamOrderGroup.id !== action.payload.id) {
+          return true;
+        }
+        return iceCreamOrderGroup.quantity + num > 0})
       .map((iceCreamOrderGroup) => {
         if (iceCreamOrderGroup.id === action.payload.id) {
           return {
@@ -64,11 +68,12 @@ export const addIceCreamToReducer = (
 ): IceCreamOrderGroup[] => {
   const newIceCream: IceCreamOrderGroup = {
     id: action.payload.id || "",
-    quantity: 1,
+    quantity: action.payload.quantity || 1,
     iceCreamName: action.payload.iceCreamName || "",
+    image: action.payload.image || "",
   };
   if (prevState.iceCream) {
-    var incremented = false;
+    let incremented = false;
     const newState = prevState.iceCream.map((iceCreamOrderGroup) => {
       if (iceCreamOrderGroup.iceCreamName === action.payload.iceCreamName) {
         incremented = true;
@@ -86,6 +91,8 @@ export const addIceCreamToReducer = (
   }
 };
 
+
+
 /**
  * A helper function to update the state of a topping item in the cart.
  *
@@ -99,19 +106,15 @@ export const changeTopping = (
   action: CartAction,
   bool: boolean,
 ) => {
-  if (prevState.toppings) {
-    return prevState.toppings.map((toppingOrderGroup) => {
-      if (toppingOrderGroup.id === action.payload.id) {
-        return {
-          ...toppingOrderGroup,
-          isAdded: bool,
-        };
-      } else {
-        return toppingOrderGroup;
-      }
-    })
-    .filter(topping => topping.isAdded);
-  } else {
-    return [];
-  }
+  return prevState.toppings.map((toppingOrderGroup) => {
+    if (toppingOrderGroup.url === action.payload.url) {
+      return {
+        ...toppingOrderGroup,
+        isAdded: bool,
+      };
+    } else {
+      return toppingOrderGroup;
+    }
+  })
+
 };
