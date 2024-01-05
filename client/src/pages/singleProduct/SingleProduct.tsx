@@ -25,6 +25,7 @@ export default function SingleProduct() {
   return (
     <div className={styles.container}>
       <ProductCard
+        key={state.flavor.name}
         name={state.flavor.name}
         image={state.flavor.imageURL}
         creator={state.flavor.userId}
