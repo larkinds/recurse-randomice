@@ -1,8 +1,13 @@
 import { Button, Modal } from "../../components";
 import { useCartContext } from "../../context/CartContext";
-import { IceCreamOrderGroup } from "../../utils/Types";
+import { IceCreamOrderGroup, ToppingOrderGroup } from "../../utils/Types";
 import styles from "./cart.module.css";
-import { decrementIceCream, incrementIceCream, removeIceCream, removeTopping } from "../../utils/DispatchUtils";
+import {
+  decrementIceCream,
+  incrementIceCream,
+  removeIceCream,
+  removeTopping,
+} from "../../utils/DispatchUtils";
 
 type Item = {
   id: string;
@@ -11,7 +16,6 @@ type Item = {
   quantity: number;
 };
 
-
 type CartProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -19,25 +23,26 @@ type CartProps = {
 
 export default function Cart({ isOpen, onClose }: CartProps) {
   const { state, dispatch } = useCartContext();
+  const toppingsInCart = state.toppings.filter((topping) => topping.isAdded);
 
-  function handleDeleteItemIceCream(id: Item["id"]) {
-    dispatch(removeIceCream(id))
+  function handleDeleteItemIceCream(id: IceCreamOrderGroup["id"]) {
+    dispatch(removeIceCream(id));
   }
 
-  function handleDeleteItemTopping(id: Item["id"]) {
-    dispatch(removeTopping(id))
+  function handleDeleteItemTopping(url: ToppingOrderGroup["url"]) {
+    dispatch(removeTopping(url));
   }
 
-  function handleUpdateQuantity(id: Item["id"], newQuantity: Item["quantity"]) {
+  function handleUpdateIcecreamQuantity(id: Item["id"], newQuantity: Item["quantity"]) {
     const iceCreamToUpdate = state.iceCream.find((flavor) => flavor.id === id);
 
     if (iceCreamToUpdate!.quantity > newQuantity) {
       for (let i = 0; i < iceCreamToUpdate!.quantity - newQuantity; i++) {
-        dispatch(decrementIceCream(id))
+        dispatch(decrementIceCream(id));
       }
     } else {
-      for (let i = 0; i < newQuantity - iceCreamToUpdate!.quantity ; i++) {
-        dispatch(incrementIceCream(id))
+      for (let i = 0; i < newQuantity - iceCreamToUpdate!.quantity; i++) {
+        dispatch(incrementIceCream(id));
       }
     }
   }
@@ -53,8 +58,23 @@ export default function Cart({ isOpen, onClose }: CartProps) {
         <CartItem key={item.id}>
           <ItemDetails item={item} />
           <div className={styles.actionBtns}>
-            <RemoveBtn itemId={item.id} onDeleteItem={handleDeleteItemIceCream} />
-            <Quantity item={item} onUpdate={handleUpdateQuantity} />
+            <RemoveBtn
+              itemId={item.id}
+              onDeleteItem={handleDeleteItemIceCream}
+            />
+            <Quantity item={item} onUpdate={handleUpdateIcecreamQuantity} />
+          </div>
+        </CartItem>
+      ))}
+      {toppingsInCart.map((item) => (
+        <CartItem key={item.url}>
+          <ItemDetails item={item} />
+          <div className={styles.actionBtns}>
+            <RemoveBtn
+              itemId={item.url}
+
+              onDeleteItem={handleDeleteItemTopping}
+            />
           </div>
         </CartItem>
       ))}
@@ -80,19 +100,46 @@ function RemoveBtn({
   );
 }
 
-function ItemDetails({ item }: { item: IceCreamOrderGroup }) {
-  return (
-    <div className={styles.details}>
-      <div className={styles.flavor}>
-        <img src={item.image ? item.image : "https://media.istockphoto.com/id/980474978/vector/strawberry-ice-cream-cone-flat-design-dessert-icon.jpg?s=612x612&w=0&k=20&c=kY7enczOhemyXVu5Jp2pmVbv5SfQPj03zcqb27fJv4I="} alt={item.iceCreamName} />
-        <span> {item.iceCreamName} </span>
+function ItemDetails({
+  item,
+}: {
+  item: IceCreamOrderGroup | ToppingOrderGroup;
+}) {
+  if ("url" in item) {
+    return (
+      <div className={styles.details}>
+        <div className={styles.flavor}>
+          <img src={item.url} alt="" />
+        </div>
       </div>
-      <p>$0</p>
-    </div>
-  );
+    );
+  } else if ("image" in item) {
+    return (
+      <div className={styles.details}>
+        <div className={styles.flavor}>
+          <img
+            src={
+              item.image
+                ? item.image
+                : "https://media.istockphoto.com/id/980474978/vector/strawberry-ice-cream-cone-flat-design-dessert-icon.jpg?s=612x612&w=0&k=20&c=kY7enczOhemyXVu5Jp2pmVbv5SfQPj03zcqb27fJv4I="
+            }
+            alt={item.iceCreamName}
+          />
+          <span> {item.iceCreamName} </span>
+        </div>
+        <p>$0</p>
+      </div>
+    );
+  }
 }
 
-function Quantity({item, onUpdate}: { item: Item; onUpdate: (id: Item["id"], newQuantity: Item["quantity"]) => void; }) {
+function Quantity({
+  item,
+  onUpdate,
+}: {
+  item: Item;
+  onUpdate: (id: Item["id"], newQuantity: Item["quantity"]) => void;
+}) {
   function handleIncrement() {
     onUpdate(item.id, item.quantity + 1);
   }

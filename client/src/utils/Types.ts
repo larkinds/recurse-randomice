@@ -14,6 +14,8 @@ export type CartAction = {
     | "REMOVE_TOPPING";
   payload: {
     id?: string;
+    url?: string;
+    name?: string;
     quantity?: number;
     iceCreamName?: string;
     image?: string;
@@ -47,7 +49,8 @@ export type IceCreamOrderGroupAction = {
 };
 
 export type ToppingOrderGroup = {
-  id: string;
+  name: string;
+  url: string;
   isAdded: boolean;
 };
 

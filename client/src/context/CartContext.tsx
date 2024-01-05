@@ -4,11 +4,24 @@ import { createContext, useContext } from "react";
 import useLocalStorageWithReducer from "../hooks/UseLocalStorage";
 import { setCart } from "../utils/DispatchUtils";
 import CartReducer from "../reducers/cartReducer";
+import Caramel from "../assets/images/toppings/caramel.png";
+import Marshmallow from "../assets/images/toppings/marshmallow.png";
+import Strawberry from "../assets/images/toppings/strawberry.png";
+import Chocolate from "../assets/images/toppings/chocolate.png";
+import Nuts from "../assets/images/toppings/nuts.png";
+import Sprinkles from "../assets/images/toppings/sprinkles.png";
 
 // Create an initial cart state.
 const cart: Cart = {
   iceCream: [],
-  toppings: [],
+  toppings: [
+    { name: "Marshmallow", url: Marshmallow, isAdded: false },
+    { name: "Caramel", url: Caramel, isAdded: false },
+    { name: "Strawberry", url: Strawberry, isAdded: false },
+    { name: "Chocolate", url: Chocolate, isAdded: false },
+    { name: "Nuts", url: Nuts, isAdded: false },
+    { name: "Sprinkles", url: Sprinkles, isAdded: false },
+  ],
 };
 
 // Create a context for the Cart and CartAction using createContext.
@@ -32,7 +45,7 @@ export const CartContextProvider: React.FC<{ children: ReactNode }> = ({
     setCart,
   );
 
-  return (                      
+  return (
     // Provide the context value to children components using CartContext.Provider.
     <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
   );

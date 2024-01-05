@@ -19,7 +19,6 @@ export const addIceCream = (iceCreamName: string, image: string, quantity: numbe
 };
 
 export const incrementIceCream = (id: string): CartAction => {
-  console.log("increment")
   return { type: "INCREMENT_ICECREAM", payload: { id } };
 };
 
@@ -31,10 +30,10 @@ export const removeIceCream = (id: string): CartAction => {
   return { type: "REMOVE_ICECREAM", payload: { id } };
 };
 
-export const addTopping = (id: string): CartAction => {
-  return { type: "ADD_TOPPING", payload: { id } };
+export const addTopping = (name: string, url: string): CartAction => {
+  return { type: "ADD_TOPPING", payload: { name, url } };
 };
 
-export const removeTopping = (id: string): CartAction => {
-  return { type: "REMOVE_TOPPING", payload: { id } };
+export const removeTopping = ( url: string): CartAction => {
+  return { type: "REMOVE_TOPPING", payload: { url } };
 };

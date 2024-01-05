@@ -13,7 +13,6 @@ export const changeQuantity = (
   action: CartAction,
   num: number,
 ): IceCreamOrderGroup[] => {
-  console.log("change quantity")
   if (prevState.iceCream) {
     return prevState.iceCream
       ?.filter((iceCreamOrderGroup) => {
@@ -92,6 +91,8 @@ export const addIceCreamToReducer = (
   }
 };
 
+
+
 /**
  * A helper function to update the state of a topping item in the cart.
  *
@@ -105,19 +106,15 @@ export const changeTopping = (
   action: CartAction,
   bool: boolean,
 ) => {
-  if (prevState.toppings) {
-    return prevState.toppings.map((toppingOrderGroup) => {
-      if (toppingOrderGroup.id === action.payload.id) {
-        return {
-          ...toppingOrderGroup,
-          isAdded: bool,
-        };
-      } else {
-        return toppingOrderGroup;
-      }
-    })
-    .filter(topping => topping.isAdded);
-  } else {
-    return [];
-  }
+  return prevState.toppings.map((toppingOrderGroup) => {
+    if (toppingOrderGroup.url === action.payload.url) {
+      return {
+        ...toppingOrderGroup,
+        isAdded: bool,
+      };
+    } else {
+      return toppingOrderGroup;
+    }
+  })
+
 };
