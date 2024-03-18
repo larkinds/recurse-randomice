@@ -14,6 +14,8 @@ const makePhrases = async (len: number) => {
       name: phrase,
       price: 0,
       image: "/strawberry-icecream.jpg",
+      userGenerated: true,
+      quantity: 0
     });
   }
   return userFlavors;
@@ -101,7 +103,7 @@ export default function HomePage() {
       <div >
         <div className="flex justify-center flex-wrap m-10 gap-3">
           {generatedFlavors.map((flavor) => (
-            <Link to={`flavor/${flavor.name}`} state={{flavor: flavor}}>
+            <Link key={flavor.name} to={`flavor/${flavor.name}`} state={{flavor: flavor}}>
             <div className="bg-white">
               <FlavorThumbnail key={flavor.name} flavor={flavor} />
             </div>
@@ -111,7 +113,7 @@ export default function HomePage() {
 
         <div className="flex justify-center flex-wrap m-10 gap-3">
           {userFlavors.map((flavor) => (
-            <Link to={`flavor/${flavor.name}`} state={{flavor: flavor}}>
+            <Link key={flavor.name} to={`flavor/${flavor.name}`} state={{flavor: flavor}}>
             <div className="bg-white">
               <FlavorThumbnail key={flavor.name} flavor={flavor} />
             </div>
